@@ -37,25 +37,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-
-
-#win32: LIBS += -L$$PWD/../../Desktop/eWalletLib/lib/ -leWallet
-
-#INCLUDEPATH += $$PWD/../../Desktop/eWalletLib/include
-#DEPENDPATH += $$PWD/../../Desktop/eWalletLib/include
-
-#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../Desktop/eWalletLib/lib/eWallet.lib
-
-#win32: LIBS += -LD:\Programs\vcpkg\packages\sqlite3_x64-windows\lib -lsqlite3
-#INCLUDEPATH += D:\Programs\vcpkg\packages\sqlite3_x64-windows\include
-#DEPENDPATH += D:\Programs\vcpkg\packages\sqlite3_x64-windows\include
-
-
-#win32: LIBS += -LC:\Users\AdminP\Desktop\eWalletLib\lib -leWallet
-#INCLUDEPATH += C:\Users\AdminP\Desktop\eWalletLib\include
-#DEPENDPATH += C:\Users\AdminP\Desktop\eWalletLib\include
-#win32:!win32-g++: PRE_TARGETDEPS += C:\Users\AdminP\Desktop\eWalletLib\lib\eWallet.lib
-
+#    !!!!!        EDIT CORRECT PATH !!!!!!!
 LIBS += -LC:\Users\AdminP\Documents\eWallet\dep\sqlite3_x64-windows\lib -lsqlite3
 INCLUDEPATH += C:\Users\AdminP\Documents\eWallet\dep\sqlite3_x64-windows\include
 DEPENDPATH += C:\Users\AdminP\Documents\eWallet\dep\sqlite3_x64-windows\include
