@@ -1,13 +1,11 @@
-QT       += core gui
-
-QT -= gui
-
+QT += core gui
 QT += network
+QT += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
-CONFIG += console
+CONFIG -= console
 CONFIG -= app_bundle
 
 TEMPLATE = app
@@ -18,16 +16,20 @@ TEMPLATE = app
 
 SOURCES += \
     account.cpp \
+    accountcardwidget.cpp \
     eWallet.cpp \
     main.cpp \
     mainwindow.cpp \
-    note.cpp
+    note.cpp \
+    notecardwidget.cpp
 
 HEADERS += \
     account.h \
+    accountcardwidget.h \
     eWallet.h \
     mainwindow.h \
-    note.h
+    note.h \
+    notecardwidget.h
 
 FORMS += \
     mainwindow.ui
@@ -37,10 +39,14 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#    !!!!!        EDIT CORRECT PATH !!!!!!!
+
+
 LIBS += -LC:\Users\AdminP\Documents\eWallet\dep\sqlite3_x64-windows\lib -lsqlite3
 INCLUDEPATH += C:\Users\AdminP\Documents\eWallet\dep\sqlite3_x64-windows\include
 DEPENDPATH += C:\Users\AdminP\Documents\eWallet\dep\sqlite3_x64-windows\include
 
 INCLUDEPATH += C:\Users\AdminP\Documents\eWallet\dep\nlohmann-json_x64-windows\include
 DEPENDPATH += C:\Users\AdminP\Documents\eWallet\dep\nlohmann-json_x64-windows\include
+
+RESOURCES += \
+    icons.qrc

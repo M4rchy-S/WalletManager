@@ -135,11 +135,11 @@ std::string wlt::Note::debugInfo()
 			break;
 		case 1:Categ = "Products";
 			break;
-		case 2: Categ = "House";
+        case 2: Categ = "Healthcare";
 			break;
-		case 3: Categ = "Transport";
+        case 3: Categ = "Public Transport";
 			break;
-		case 4: Categ = "Car";
+        case 4: Categ = "Vehicle";
 			break;
 		case 5:	Categ = "Entertainment";
 			break;
@@ -147,6 +147,10 @@ std::string wlt::Note::debugInfo()
 			break;
 		case 7:	Categ = "Finance Expensies";
 			break;
+        case 8: Categ = "Transfer operation";
+            break;
+        case 9: Categ = "Earnings";
+            break;
 		default:
 			Categ = "";
 			break;
@@ -204,8 +208,66 @@ std::string wlt::Note::getAccountNameAddit()
 }
 
 
-
 void wlt::Note::setAccountNameAddit(std::string& newName)
 {
 	this->AccountNameAddit = newName;
 }
+
+std::string wlt::Note::getDetails()
+{
+    return this->Details;
+}
+
+void wlt::Note::setDetails(std::string new_detail)
+{
+    this->Details = new_detail;
+}
+
+unsigned int wlt::Note::getDay()
+{
+    return this->day;
+}
+
+unsigned int wlt::Note::getMonth()
+{
+    return this->month;
+}
+
+unsigned int wlt::Note::getYear()
+{
+    return this->year;
+}
+
+
+std::string wlt::Note::getCategoryString()
+{
+    switch (this->CategoryType)
+    {
+    case 0: return "Food";
+        break;
+    case 1:return "Products";
+        break;
+    case 2: return "Healthcare";
+        break;
+    case 3: return "Public Transport";
+        break;
+    case 4: return "Vehicle";
+        break;
+    case 5:	return "Entertainment";
+        break;
+    case 6:	return "Network";
+        break;
+    case 7:	return "Finance Expensies";
+        break;
+    case 8: return "Transfer operation";
+        break;
+    case 9: return "Earnings";
+        break;
+    default:
+        return "";
+        break;
+    }
+}
+
+
+

@@ -9,7 +9,7 @@
 namespace wlt {
 
 	enum Operation { INCOME, EXPENSE , TRANSFER};
-	enum Category { FOOD, PRODUCT, HOUSE, TRANSPORT, CAR, ENTERTAINMENT, NETWORK, FINANCE_EXPENSIES, TRANSFER_OPERATION, EARNINGS};
+    enum Category { FOOD, PRODUCT, HEALTHCARE, TRANSPORT, CAR, ENTERTAINMENT, NETWORK, FINANCE_EXPENSIES, TRANSFER_OPERATION, EARNINGS};
 
 
 	class Note {
@@ -60,12 +60,21 @@ namespace wlt {
 		double getValue();
 		void setValue(double);
 
+        std::string getDetails();
+        void setDetails(std::string new_details);
+
+        unsigned int getDay();
+        unsigned int getMonth();
+        unsigned int getYear();
+
 		unsigned long getId();
 
 		std::string debugInfo();
 		std::string getTimeInfo();
 
 		time_t getEpochTime();
+
+        std::string getCategoryString();
 
 	};
 

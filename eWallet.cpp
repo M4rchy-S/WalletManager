@@ -10,7 +10,7 @@ wlt::eWallet::eWallet()
 	if (this->SQLRequest("select * from Settings", this->callback_settings) == -1)
 	{
 		//	Create db manually
-		std::cout << "Creating db" << std::endl;
+        //std::cout << "Creating db" << std::endl;
 
 		 
 		const char *sql = "CREATE TABLE \"Accounts\" ( \
@@ -57,16 +57,16 @@ wlt::eWallet::eWallet()
 
 		//		Get Rates from API
         this->fillRatesTables();
+        //      Delete BTC from Rates
+        this->deleteRate("BTC");
 	}
 	else
 	{
 		//	Getting all data from db
-		std::cout << "Adding data to memory from db" << std::endl;
+        //std::cout << "Adding data to memory from db" << std::endl;
 
-		this->SQLRequest("select * from Accounts", this->callback_accounts);
-		this->SQLRequest("select * from Notes", this->callback_notes);
-		this->SQLRequest("select * from Rates", this->callback_rates);
-
+        this->resetProgramDataFromDB();
+        this->deleteRate("BTC");
 		//		Get Rates from API
 
 		if (this->LocalMonth != this->getMonth())
@@ -74,6 +74,7 @@ wlt::eWallet::eWallet()
 			this->LocalMonth = this->getMonth();
 			this->SQLRequest("UPDATE Settings SET Month = " + std::to_string(this->LocalMonth), this->callback);
             this->fillRatesTables();
+
 		}
 	}
 	
@@ -85,6 +86,7 @@ wlt::eWallet::~eWallet()
 {
 	this->accounts.clear();
 	this->notes.clear();
+    this->Rates.clear();
 }
 
 
@@ -106,34 +108,34 @@ int wlt::eWallet::Create_Account( const std::string& Name, double Value, std::st
 	if(addToDB == true)
 		this->SQLRequest("INSERT INTO Accounts VALUES(\"" + Name + "\", \"" + new_currency + "\", " + std::to_string(Value) + ")", this->callback);
 
-	return 0;
+    return 1;
 }
 
 void wlt::eWallet::Show_Accounts_All()
 {
-	std::cout << "\t--= Accounts =--" << std::endl;
-	int i = 0;
-	for (auto it = this->accounts.begin(); it != this->accounts.end(); it++, i++)
-	{
-		std::cout << i+1 << ": " << it->debugInfo() << std::endl;
-	}
-	std::cout << std::endl;
+    // std::cout << "\t--= Accounts =--" << std::endl;
+    // int i = 0;
+    // for (auto it = this->accounts.begin(); it != this->accounts.end(); it++, i++)
+    // {
+    // 	std::cout << i+1 << ": " << it->debugInfo() << std::endl;
+    // }
+    // std::cout << std::endl;
 }
 
 int wlt::eWallet::Show_Account(int index)
 {
-	if (index <= 0 || index > this->accounts.size())
-		return -1;
+    // if (index <= 0 || index > this->accounts.size())
+    // 	return -1;
 
-	std::list<wlt::Account>::iterator it = this->accounts.begin();
-	std::advance(it, index - 1);
+    // std::list<wlt::Account>::iterator it = this->accounts.begin();
+    // std::advance(it, index - 1);
 
-	std::cout << "\t--= Account =--" << std::endl;
-	std::cout << index << ": " << it->debugInfo() << std::endl;
+    // std::cout << "\t--= Account =--" << std::endl;
+    // std::cout << index << ": " << it->debugInfo() << std::endl;
 
-	std::cout << std::endl;
+    // std::cout << std::endl;
 
-	return 0;
+    return 1;
 }
 
 int wlt::eWallet::Remove_Account(int index)
@@ -145,9 +147,76 @@ int wlt::eWallet::Remove_Account(int index)
 	std::advance(it, index - 1);
 
 	this->SQLRequest("DELETE from Accounts WHERE Name=\"" + it->getName() + "\"", callback);
+    this->SQLRequest("DELETE from Notes WHERE AccountName=\"" + it->getName() + "\"", callback);
 	this->accounts.erase(it);
 
-	return 0;
+    this->resetProgramDataFromDB();
+
+    return 1;
+}
+
+int wlt::eWallet::Remove_Account(std::string accName)
+{
+    int index = this->_getAccount(accName);
+    if(index == -1)
+        return -1;
+
+    std::list<wlt::Account>::iterator acc_iter = this->accounts.begin();
+    std::advance(acc_iter, index - 1);
+
+    this->SQLRequest("DELETE from Accounts WHERE Name=\"" + acc_iter->getName() + "\"", callback);
+    this->SQLRequest("DELETE from Notes WHERE AccountName=\"" + acc_iter->getName() + "\"", callback);
+    this->accounts.erase(acc_iter);
+
+    this->resetProgramDataFromDB();
+
+    return 1;
+
+}
+
+int wlt::eWallet::Edit_Account(std::string accName, double Value, std::string new_currency, bool addToDB)
+{
+    int index = this->_getAccount(accName);
+    if(index == -1)
+        return -1;
+
+    std::list<wlt::Account>::iterator acc_iter = this->accounts.begin();
+    std::advance(acc_iter, index - 1);
+
+    acc_iter->setCount(Value);
+    acc_iter->setCurrencyType(new_currency);
+
+    if(addToDB == true)
+        this->SQLRequest("UPDATE Accounts SET CurrencyType='" + acc_iter->getCurrencyType() + "', Count='" + std::to_string(acc_iter->getCount()) + "' WHERE Name='" + acc_iter->getName() + "'", this->callback);
+
+    return 1;
+}
+
+wlt::Account wlt::eWallet::getAccountByName(std::string accName)
+{
+    int index = this->_getAccount(accName);
+    if(index == -1)
+        return nullptr;
+
+    std::list<wlt::Account>::iterator acc_iter = this->accounts.begin();
+    std::advance(acc_iter, index - 1);
+
+    wlt::Account ret_account(acc_iter->getName(), acc_iter->getCurrencyType(), acc_iter->getCount());
+
+    return ret_account;
+}
+
+std::list<wlt::Note>::iterator wlt::eWallet::getNoteByID(unsigned long id)
+{
+    std::list<wlt::Note>::iterator note_iterator = this->notes.begin();
+    for(; note_iterator != this->notes.end(); note_iterator++)
+    {
+        if(note_iterator->getId() == id)
+        {
+            return note_iterator;
+        }
+    }
+    throw std::out_of_range("Iterator out of range");
 }
 
 int wlt::eWallet::Create_Note(Operation OperationType, Category CategoryType, int index, double value, std::string details)
@@ -160,11 +229,19 @@ int wlt::eWallet::Create_Note(Operation OperationType, Category CategoryType, in
 
 
 	//	SQL Request
-	auto note_iterator = this->notes.begin();
-	std::advance(note_iterator, this->notes.size() - 1);
-	int id = note_iterator->getId() + 1;
+    unsigned long id;
+    std::list<wlt::Note>::iterator note_iterator;
+
+    if(this->notes.size() != 0)
+    {
+        note_iterator = this->notes.begin();
+        //std::advance(note_iterator, this->notes.size() - 1);
+        id = note_iterator->getId() + 1;
+    }
+    else
+        id = 1;
 	
-	this->notes.push_back( wlt::Note(OperationType, CategoryType, it->getName(), value, id, details));
+    this->notes.push_front( wlt::Note(OperationType, CategoryType, it->getName(), value, id, details));
 
 	note_iterator = this->notes.begin();
 	std::advance(note_iterator, this->notes.size() - 1);
@@ -192,6 +269,7 @@ int wlt::eWallet::Create_Note(Operation OperationType, Category CategoryType, in
 		default:
 			break;
 	}
+    return 1;
 }
 
 int wlt::eWallet::Create_Note(Operation OperationType,int index1, int index2, double value, std::string details)
@@ -207,11 +285,19 @@ int wlt::eWallet::Create_Note(Operation OperationType,int index1, int index2, do
 	std::advance(it1, index1 - 1);
 	std::advance(it2, index2 - 1);
 
-	auto note_iterator = this->notes.begin();
-	std::advance(note_iterator, this->notes.size() - 1);
-	int id = note_iterator->getId() + 1;
+    unsigned long id;
+    std::list<wlt::Note>::iterator note_iterator;
 
-	this->notes.push_back(wlt::Note(OperationType, it1->getName(), it2->getName(), value, id, details));
+    if(this->notes.size() != 0)
+    {
+        note_iterator = this->notes.begin();
+        //std::advance(note_iterator, this->notes.size() - 1);
+        id = note_iterator->getId() + 1;
+    }
+    else
+        id = 1;
+
+    this->notes.push_front(wlt::Note(OperationType, it1->getName(), it2->getName(), value, id, details));
 
 	note_iterator = this->notes.begin();
 	std::advance(note_iterator, this->notes.size() - 1);
@@ -229,6 +315,7 @@ int wlt::eWallet::Create_Note(Operation OperationType,int index1, int index2, do
 	it2->changeCount(value);
 	sql_req = "UPDATE Accounts SET Count=" + std::to_string(it2->getCount()) + " WHERE Name='" + it2->getName() + "'";
 	this->SQLRequest(sql_req, this->callback);
+    return 1;
 }
 
 int wlt::eWallet::Add_Note_DB(Operation OperationType, Category CategoryType, int index, double value, unsigned long long time  ,std::string details, unsigned long id)
@@ -236,11 +323,12 @@ int wlt::eWallet::Add_Note_DB(Operation OperationType, Category CategoryType, in
 	if (index <= 0 || index > this->accounts.size())
 		return -1;
 
-	auto it = this->accounts.begin();
-	std::advance(it, index - 1);
 
-	this->notes.push_back(wlt::Note(OperationType, CategoryType, it->getName(), value, id, details, time));
-
+    auto it = this->accounts.begin();
+    std::advance(it, index - 1);
+    this->notes.push_back(wlt::Note(OperationType, CategoryType, it->getName(), value, id, details, time));
+    // this->accounts.push_back( wlt::Account(Name, new_currency, Value) );
+    return 1;
 }
 
 int wlt::eWallet::Add_Note_DB(Operation OperationType, int index1, int index2, double value,  unsigned long long time , std::string details, unsigned long id)
@@ -257,33 +345,34 @@ int wlt::eWallet::Add_Note_DB(Operation OperationType, int index1, int index2, d
 	std::advance(it2, index2 - 1);
 
 	this->notes.push_back(wlt::Note(OperationType, it1->getName(), it2->getName(), value, id, details, time));
-
+    return 1;
 }
 
 
 void wlt::eWallet::Show_Notes_All()
 {
-	std::cout << "\t--= Notes =--" << std::endl;
-	int i = 0;
-	for (auto it = notes.begin(); it != notes.end(); it++, i++)
-	{
-		std::cout << i + 1 << ": ID[" << it->getId() << "] " << it->debugInfo() << "\tDate: " << it->getTimeInfo() << std::endl;
-	}
-	std::cout << std::endl;
+    // std::cout << "\t--= Notes =--" << std::endl;
+    // int i = 0;
+    // for (auto it = notes.begin(); it != notes.end(); it++, i++)
+    // {
+    // 	std::cout << i + 1 << ": ID[" << it->getId() << "] " << it->debugInfo() << "\tDate: " << it->getTimeInfo() << std::endl;
+    // }
+    // std::cout << std::endl;
 }
 
 int wlt::eWallet::Show_Note(int index)
 {
-	if (index <= 0 || index > this->notes.size())
-		return -1;
+    // if (index <= 0 || index > this->notes.size())
+    // 	return -1;
 
-	auto it = this->notes.begin();
-	std::advance(it, index - 1);
+    // auto it = this->notes.begin();
+    // std::advance(it, index - 1);
 
-	std::cout << "\t--= Note =--" << std::endl;
-	std::cout << index << ": " << it->debugInfo() << "\tDate: " << it->getTimeInfo() << std::endl;
+    // std::cout << "\t--= Note =--" << std::endl;
+    // std::cout << index << ": " << it->debugInfo() << "\tDate: " << it->getTimeInfo() << std::endl;
 
-	std::cout << std::endl;
+    // std::cout << std::endl;
+    return 1;
 }
 
 int wlt::eWallet::Remove_Note(int index)
@@ -346,8 +435,413 @@ int wlt::eWallet::Remove_Note(int index)
 	this->SQLRequest("DELETE from Notes WHERE ID=" + std::to_string(note_it->getId()), this->callback);
 
 	this->notes.erase(note_it);
+
+    return 1;
 }
 
+int wlt::eWallet::Remove_Note(unsigned long id)
+{
+    std::list<wlt::Note>::iterator note_it;
+    bool found_note = false;
+
+    for(note_it = this->notes.begin(); note_it != this->notes.end(); note_it++)
+    {
+        if(note_it->getId() == id)
+        {
+            found_note = true;
+            break;
+        }
+    }
+    if(found_note == false)
+        return -1;
+
+    std::list<wlt::Account>::iterator acc_it;
+    std::list<wlt::Account>::iterator acc_add_it;
+    int acc_index;
+    int acc_add_index;
+
+    //		Change Account Value
+
+    switch(note_it->getOperation())
+    {
+    case wlt::INCOME:
+        acc_index = this->_getAccount( note_it->getAccountName() );
+        acc_it = this->accounts.begin();
+        std::advance(acc_it, acc_index - 1);
+
+        acc_it->changeCount(-1 * note_it->getValue());
+
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_it->getCount()) + " WHERE Name='" + acc_it->getName() + "'", this->callback);
+        break;
+    case wlt::EXPENSE:
+        acc_index = this->_getAccount(note_it->getAccountName());
+        acc_it = this->accounts.begin();
+        std::advance(acc_it, acc_index - 1);
+
+        acc_it->changeCount(note_it->getValue());
+
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_it->getCount()) + " WHERE Name='" + acc_it->getName() + "'", this->callback);
+        break;
+    case wlt::TRANSFER:
+        acc_index = this->_getAccount(note_it->getAccountName());
+        acc_add_index = this->_getAccount(note_it->getAccountNameAddit());
+        acc_it = this->accounts.begin();
+        acc_add_it = this->accounts.begin();
+        std::advance(acc_it, acc_index - 1);
+        std::advance(acc_add_it, acc_add_index - 1);
+
+        acc_it->changeCount(note_it->getValue());
+        acc_add_it->changeCount(-1 * note_it->getValue());
+
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_it->getCount()) + " WHERE Name='" + acc_it->getName() + "'", this->callback);
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_add_it->getCount()) + " WHERE Name='" + acc_add_it->getName() + "'", this->callback);
+
+        break;
+
+    default:
+        break;
+    }
+
+    //		Delete Note from database and memory
+
+    this->SQLRequest("DELETE from Notes WHERE ID=" + std::to_string(note_it->getId()), this->callback);
+
+    this->notes.erase(note_it);
+
+    return 1;
+
+}
+
+int wlt::eWallet::Create_Note(Operation OperationType, Category CategoryType, std::string AccountName, double value, std::string details)
+{
+    int index_acc = this->_getAccount(AccountName);
+    if(index_acc == -1)
+        return -1;
+
+    std::list<wlt::Account>::iterator acc_iter = this->accounts.begin();
+    std::advance(acc_iter, index_acc - 1);
+
+    //	SQL Request
+    //  get correct id
+    unsigned long id;
+    std::list<wlt::Note>::iterator note_iterator;
+
+    if(this->notes.size() != 0)
+    {
+        note_iterator = this->notes.begin();
+        //std::advance(note_iterator, this->notes.size() - 1);
+        id = note_iterator->getId() + 1;
+    }
+    else
+        id = 1;
+
+    //  add data to program memory
+    this->notes.push_front( wlt::Note(OperationType, CategoryType, acc_iter->getName(), value, id, details));
+
+    //  get epochTime from memory
+    note_iterator = this->notes.begin();
+    std::advance(note_iterator, this->notes.size() - 1);
+    time_t epochTime = note_iterator->getEpochTime();
+
+    //  Create sql query
+    std::string sql_req = "INSERT INTO Notes VALUES(" + std::to_string(static_cast<int>(OperationType)) + ", " + std::to_string(static_cast<int>(CategoryType)) + ", \""
+                          + acc_iter->getName() + "\", \"\", " + std::to_string(value) + ", \"" + details + "\", " + std::to_string(epochTime) + ", " + std::to_string(id ) + ")";
+    this->SQLRequest(sql_req, this->callback);
+
+    //  Change account count
+    switch (OperationType)
+    {
+        case wlt::INCOME:
+            acc_iter->changeCount(value);
+            sql_req = "UPDATE Accounts SET Count=" + std::to_string(acc_iter->getCount()) + " WHERE Name='" + acc_iter->getName() + "'";
+            this->SQLRequest(sql_req, this->callback);
+            break;
+        case wlt::EXPENSE:
+            acc_iter->changeCount(value * -1);
+            sql_req = "UPDATE Accounts SET Count=" + std::to_string(acc_iter->getCount()) + " WHERE Name='" + acc_iter->getName() + "'";
+            this->SQLRequest(sql_req, this->callback);
+            break;
+        case wlt::TRANSFER:
+            break;
+        default:
+            break;
+    }
+    return 1;
+}
+
+int wlt::eWallet::Create_Note(Operation OperationType, Category CategoryType, std::string AccountName, std::string AccountNameAddit,double value, std::string details)
+{
+    //  Operation check
+    if (OperationType != wlt::Operation::TRANSFER)
+        return -1;
+    //  Account #1
+    int index = this->_getAccount(AccountName);
+    if(index == -1)
+        return -1;
+    std::list<wlt::Account>::iterator acc_iter = this->accounts.begin();
+    std::advance(acc_iter, index - 1);
+
+    //  Account #2
+    index = this->_getAccount(AccountNameAddit);
+    if(index == -1)
+        return -1;
+    std::list<wlt::Account>::iterator acc_add_iter = this->accounts.begin();
+    std::advance(acc_add_iter, index - 1);
+
+    //  Get correct id
+    unsigned long id;
+    std::list<wlt::Note>::iterator note_iterator;
+
+    if(this->notes.size() != 0)
+    {
+        note_iterator = this->notes.begin();
+        //std::advance(note_iterator, this->notes.size() - 1);
+        id = note_iterator->getId() + 1;
+    }
+    else
+        id = 1;
+
+    //  Add data to memory
+    this->notes.push_front(wlt::Note(OperationType, acc_iter->getName(), acc_add_iter->getName(), value, id, details));
+
+    //  Get epochTime
+    note_iterator = this->notes.begin();
+    std::advance(note_iterator, this->notes.size() - 1);
+    time_t epochTime = note_iterator->getEpochTime();
+
+    //  SQL Query
+    std::string sql_req = "INSERT INTO Notes VALUES(" + std::to_string(static_cast<int>(OperationType)) + ", " + std::to_string(static_cast<int>(wlt::Operation::TRANSFER)) + ", \""
+                          + acc_iter->getName() + "\", \"" + acc_add_iter->getName()+ "\", " + std::to_string(value) + ", \"" + details + "\", " + std::to_string(epochTime) + ", " + std::to_string(id) + ")";
+    this->SQLRequest(sql_req, this->callback);
+
+    //  Change accounts count
+    acc_iter->changeCount(value * -1);
+    sql_req = "UPDATE Accounts SET Count=" + std::to_string(acc_iter->getCount()) + " WHERE Name='" + acc_iter->getName() + "'";
+    this->SQLRequest(sql_req, this->callback);
+
+    acc_add_iter->changeCount(value);
+    sql_req = "UPDATE Accounts SET Count=" + std::to_string(acc_add_iter->getCount()) + " WHERE Name='" + acc_add_iter->getName() + "'";
+    this->SQLRequest(sql_req, this->callback);
+
+    return 1;
+}
+
+int wlt::eWallet::Edit_Note(unsigned long id, Operation OperationType, Category CategoryType, std::string AccountName, double value, std::string details)
+{
+    //  incorrect input check
+    int new_acc_index = this->_getAccount(AccountName);
+    if(new_acc_index == -1)
+        return -1;
+    //  Find note with same id
+    std::list<wlt::Note>::iterator note_it;
+    bool found_note = false;
+
+    for(note_it = this->notes.begin(); note_it != this->notes.end(); note_it++)
+    {
+        if(note_it->getId() == id)
+        {
+            found_note = true;
+            break;
+        }
+    }
+    if(found_note == false)
+        return -1;
+
+    //  Create iterators for accounts
+    std::list<wlt::Account>::iterator acc_it;
+    std::list<wlt::Account>::iterator acc_add_it;
+    int acc_index;
+    int acc_add_index;
+
+    //		unchange Account Value
+
+    switch(note_it->getOperation())
+    {
+    case wlt::INCOME:
+        acc_index = this->_getAccount( note_it->getAccountName() );
+        acc_it = this->accounts.begin();
+        std::advance(acc_it, acc_index - 1);
+
+        acc_it->changeCount(-1 * note_it->getValue());
+
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_it->getCount()) + " WHERE Name='" + acc_it->getName() + "'", this->callback);
+        break;
+    case wlt::EXPENSE:
+        acc_index = this->_getAccount(note_it->getAccountName());
+        acc_it = this->accounts.begin();
+        std::advance(acc_it, acc_index - 1);
+
+        acc_it->changeCount(note_it->getValue());
+
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_it->getCount()) + " WHERE Name='" + acc_it->getName() + "'", this->callback);
+        break;
+    case wlt::TRANSFER:
+        acc_index = this->_getAccount(note_it->getAccountName());
+        acc_add_index = this->_getAccount(note_it->getAccountNameAddit());
+        acc_it = this->accounts.begin();
+        acc_add_it = this->accounts.begin();
+        std::advance(acc_it, acc_index - 1);
+        std::advance(acc_add_it, acc_add_index - 1);
+
+        acc_it->changeCount(note_it->getValue());
+        acc_add_it->changeCount(-1 * note_it->getValue());
+
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_it->getCount()) + " WHERE Name='" + acc_it->getName() + "'", this->callback);
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_add_it->getCount()) + " WHERE Name='" + acc_add_it->getName() + "'", this->callback);
+
+        break;
+
+    default:
+        break;
+    }
+
+    //		Update Note to database and memory
+    note_it->setOperation(OperationType);
+    note_it->setCategory(CategoryType);
+    note_it->setAccountName(AccountName);
+    note_it->setValue(value);
+    note_it->setDetails(details);
+
+    //  Create sql query
+    std::string sql_req = "UPDATE Notes SET Operation='" + std::to_string(static_cast<int>( note_it->getOperation() ) ) + "', CategoryType='" +  std::to_string(static_cast<int>( note_it->getCategory() ) ) +
+                          "', AccountName='" + note_it->getAccountName() + "', AccountNameAddit='', Value='" + std::to_string( note_it->getValue() ) + "', Details='" + note_it->getDetails() +
+                          "', Time='" + std::to_string(note_it->getEpochTime()) + "' WHERE ID='" + std::to_string( note_it->getId() ) + "'";
+
+    this->SQLRequest(sql_req, this->callback);
+
+    //  Change accounts count
+    std::list<wlt::Account>::iterator acc_iter = this->accounts.begin();
+    std::advance(acc_iter, new_acc_index - 1);
+
+    switch (OperationType)
+    {
+        case wlt::INCOME:
+            acc_iter->changeCount(value);
+            sql_req = "UPDATE Accounts SET Count=" + std::to_string(acc_iter->getCount()) + " WHERE Name='" + acc_iter->getName() + "'";
+            this->SQLRequest(sql_req, this->callback);
+            break;
+        case wlt::EXPENSE:
+            acc_iter->changeCount(value * -1);
+            sql_req = "UPDATE Accounts SET Count=" + std::to_string(acc_iter->getCount()) + " WHERE Name='" + acc_iter->getName() + "'";
+            this->SQLRequest(sql_req, this->callback);
+            break;
+        case wlt::TRANSFER:
+            break;
+        default:
+            break;
+    }
+
+    return 1;
+}
+int wlt::eWallet::Edit_Note(unsigned long id, Operation OperationType, Category CategoryType, std::string AccountName, std::string AccountNameAddit,double value, std::string details)
+{
+    //  Check for TRANSFER Operation
+    if(OperationType != wlt::Operation::TRANSFER)
+        return -1;
+    //  incorrect input check
+    int new_acc_index = this->_getAccount(AccountName);
+    if(new_acc_index == -1)
+        return -1;
+
+    int new_acc_add_index = this->_getAccount(AccountNameAddit);
+    if(new_acc_add_index == -1)
+        return-1;
+    //  Find note with same id
+    std::list<wlt::Note>::iterator note_it;
+    bool found_note = false;
+
+    for(note_it = this->notes.begin(); note_it != this->notes.end(); note_it++)
+    {
+        if(note_it->getId() == id)
+        {
+            found_note = true;
+            break;
+        }
+    }
+    if(found_note == false)
+        return -1;
+
+    //  Create iterators for accounts
+    std::list<wlt::Account>::iterator acc_it;
+    std::list<wlt::Account>::iterator acc_add_it;
+    int acc_index;
+    int acc_add_index;
+
+    //		unchange Account Value
+
+    switch(note_it->getOperation())
+    {
+    case wlt::INCOME:
+        acc_index = this->_getAccount( note_it->getAccountName() );
+        acc_it = this->accounts.begin();
+        std::advance(acc_it, acc_index - 1);
+
+        acc_it->changeCount(-1 * note_it->getValue());
+
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_it->getCount()) + " WHERE Name='" + acc_it->getName() + "'", this->callback);
+        break;
+    case wlt::EXPENSE:
+        acc_index = this->_getAccount(note_it->getAccountName());
+        acc_it = this->accounts.begin();
+        std::advance(acc_it, acc_index - 1);
+
+        acc_it->changeCount(note_it->getValue());
+
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_it->getCount()) + " WHERE Name='" + acc_it->getName() + "'", this->callback);
+        break;
+    case wlt::TRANSFER:
+        acc_index = this->_getAccount(note_it->getAccountName());
+        acc_add_index = this->_getAccount(note_it->getAccountNameAddit());
+        acc_it = this->accounts.begin();
+        acc_add_it = this->accounts.begin();
+        std::advance(acc_it, acc_index - 1);
+        std::advance(acc_add_it, acc_add_index - 1);
+
+        acc_it->changeCount(note_it->getValue());
+        acc_add_it->changeCount(-1 * note_it->getValue());
+
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_it->getCount()) + " WHERE Name='" + acc_it->getName() + "'", this->callback);
+        this->SQLRequest("UPDATE Accounts SET Count=" + std::to_string(acc_add_it->getCount()) + " WHERE Name='" + acc_add_it->getName() + "'", this->callback);
+
+        break;
+
+    default:
+        break;
+    }
+
+    //		Update Note to database and memory
+    note_it->setOperation(OperationType);
+    note_it->setCategory(CategoryType);
+    note_it->setAccountName(AccountName);
+    note_it->setAccountNameAddit(AccountNameAddit);
+    note_it->setValue(value);
+    note_it->setDetails(details);
+
+    //  Create sql query
+    std::string sql_req = "UPDATE Notes SET Operation='" + std::to_string(static_cast<int>( note_it->getOperation() ) ) + "', CategoryType='" +  std::to_string(static_cast<int>( note_it->getCategory() ) ) +
+                          "', AccountName='" + note_it->getAccountName() + "', AccountNameAddit='" + note_it->getAccountNameAddit() +"', Value='" + std::to_string( note_it->getValue() ) + "', Details='" + note_it->getDetails() +
+                          "', Time='" + std::to_string(note_it->getEpochTime()) + "' WHERE ID='" + std::to_string( note_it->getId() ) + "'";
+
+    this->SQLRequest(sql_req, this->callback);
+
+    //  Change accounts count
+    std::list<wlt::Account>::iterator acc_iter = this->accounts.begin();
+    std::advance(acc_iter, new_acc_index - 1);
+
+    std::list<wlt::Account>::iterator acc_add_iter = this->accounts.begin();
+    std::advance(acc_add_iter, new_acc_add_index - 1);
+
+    //  Change accounts count
+    acc_iter->changeCount(value * -1);
+    sql_req = "UPDATE Accounts SET Count=" + std::to_string(acc_iter->getCount()) + " WHERE Name='" + acc_iter->getName() + "'";
+    this->SQLRequest(sql_req, this->callback);
+
+    acc_add_iter->changeCount(value);
+    sql_req = "UPDATE Accounts SET Count=" + std::to_string(acc_add_iter->getCount()) + " WHERE Name='" + acc_add_iter->getName() + "'";
+    this->SQLRequest(sql_req, this->callback);
+
+    return 1;
+}
 
 int wlt::eWallet::_getAccount(const std::string& Name)
 {
@@ -380,13 +874,46 @@ void wlt::eWallet::addRate(std::string currency, double value)
 	this->Rates[currency] = value;
 }
 
-void wlt::eWallet::showRate()
+void wlt::eWallet::showRates()
 {
-	std::cout << "\t--= Rates =--" << std::endl;
-	for (auto it = Rates.begin(); it != Rates.end(); it++)
-	{
-		std::cout << "[" << it->first << "] = " << it->second << std::endl;
-	}
+    // std::cout << "\t--= Rates =--" << std::endl;
+    // for (auto it = Rates.begin(); it != Rates.end(); it++)
+    // {
+    // 	std::cout << "[" << it->first << "] = " << it->second << std::endl;
+    // }
+}
+
+void wlt::eWallet::deleteRate(std::string key)
+{
+    auto it = this->Rates.find(key);
+    this->Rates.erase(it);
+}
+
+int wlt::eWallet::inRatesTable(std::string key)
+{
+    if( this->Rates.find(key) == this->Rates.end())
+        return -1;
+    return 0;
+}
+
+std::list<std::string> wlt::eWallet::getRatesNames()
+{
+    std::list<std::string> ret_lst;
+    for(auto it = Rates.begin(); it != Rates.end(); it++)
+    {
+        ret_lst.push_back( it->first );
+    }
+    return ret_lst;
+}
+
+std::list<double> wlt::eWallet::getRatesValues()
+{
+    std::list<double> ret_lst;
+    for(auto it = Rates.begin(); it != Rates.end(); it++)
+    {
+        ret_lst.push_back( it->second );
+    }
+    return ret_lst;
 }
 
 
@@ -427,11 +954,11 @@ int wlt::eWallet::callback(void* NotUsed, int argc, char** argv, char** azColNam
 	wlt::eWallet *wallet = (wlt::eWallet*)NotUsed;
 	
 	int i;
-	for (i = 0; i < argc; i++)
-	{
-		std::cout << azColName[i] << " = " << (argv[i] ? argv[i] : "NULL") << "\n";
-	}
-	std::cout << "\n";
+    // for (i = 0; i < argc; i++)
+    // {
+    // 	std::cout << azColName[i] << " = " << (argv[i] ? argv[i] : "NULL") << "\n";
+    // }
+    // std::cout << "\n";
 	return 0;
 }
 
@@ -461,25 +988,30 @@ int wlt::eWallet::callback_accounts(void* NotUsed, int argc, char** argv, char**
 
 int wlt::eWallet::callback_notes(void* NotUsed, int argc, char** argv, char** azColName)
 {
-	wlt::eWallet* wallet = (wlt::eWallet*)NotUsed;
+    try
+    {
+        wlt::eWallet* wallet = (wlt::eWallet*)NotUsed;
 
-	wlt::Operation operation = static_cast<wlt::Operation>( atoi(argv[0]) );
-	wlt::Category category = static_cast<wlt::Category>( atoi(argv[1]) );
-	double value = atof(argv[4]);
-	unsigned long long time = atoll(argv[6]);
-	unsigned long id = atol(argv[7]);
+        wlt::Operation operation = static_cast<wlt::Operation>( atoi(argv[0]) );
+        wlt::Category category = static_cast<wlt::Category>( atoi(argv[1]) );
+        double value = atof(argv[4]);
+        unsigned long long time = atoll(argv[6]);
+        unsigned long id = atol(argv[7]);
 
-	if (std::string(argv[3]) == "")
-	{
-		wallet->Add_Note_DB(operation, category, wallet->_getAccount(argv[2]), value, time, argv[5], id);
-	}
-	else
-	{
-		wallet->Add_Note_DB(operation, wallet->_getAccount(argv[2]), wallet->_getAccount(argv[3]),value, time, argv[5], id);
-	}
-
-
-	return 0;
+        if (std::string(argv[3]) == "")
+        {
+            wallet->Add_Note_DB(operation, category, wallet->_getAccount(argv[2]), value, time, argv[5], id);
+        }
+        else
+        {
+            wallet->Add_Note_DB(operation, wallet->_getAccount(argv[2]), wallet->_getAccount(argv[3]),value, time, argv[5], id);
+        }
+        return 0;
+    }
+    catch(const std::exception &e)
+    {
+        return -1;
+    }
 }
 
 int wlt::eWallet::callback_rates(void* NotUsed, int argc, char** argv, char** azColName)
@@ -562,7 +1094,7 @@ int wlt::eWallet::fillRatesTables()
         }
         else
         {
-            std::cout << "Unsuccessful request GET " << std::endl;
+            //std::cout << "Unsuccessful request GET " << std::endl;
             return -1;
         }
 
@@ -570,60 +1102,173 @@ int wlt::eWallet::fillRatesTables()
     }
     catch (const nlohmann::json::exception& e)
     {
-        std::cerr << "Error while parsing: " << e.what() << std::endl;
+        //std::cerr << "Error while parsing: " << e.what() << std::endl;
         return -1;
     }
 }
 
-/*
-
-int wlt::eWallet::request_GET_Rates()
+void wlt::eWallet::resetProgramDataFromDB()
 {
-	//			API Request
+    this->accounts.clear();
+    this->notes.clear();
+    this->Rates.clear();
 
-	std::string url = "http://data.fixer.io";
-	std::string access_key = "2e9d372d0563e0d1a409f40f72917696";
-	std::string base = this->Currency_Type;
-	std::string args = "/api/latest?access_key=" + access_key + "&base=" + base;
-	//std::string args = "/api/latest";		//		For testing
-
-
-	httplib::Client cli(url);
-	auto response = cli.Get(args);
-
-	//		JSON Parsing
-
-	try {
-		nlohmann::json data = nlohmann::json::parse(response->body);
-
-		if (data["success"].dump() == "true") {
-
-			nlohmann::json rates = data["rates"];
-			this->Rates.clear();
-			this->SQLRequest("DELETE FROM Rates", this->callback);
-
-
-			for (auto it = rates.begin(); it != rates.end(); it++)
-			{
-				//std::cout << it.key() << ": " << it.value() << std::endl;
-				this->addRate(it.key(), (double)it.value());
-				//std::string sql = "INSERT INTO Rates VALUES('" + it.key() + "', " + std::to_string((double)it.value()) + ")";
-				this->SQLRequest("INSERT INTO Rates VALUES('" + it.key() + "', " + std::to_string((double)it.value()) + ")", this->callback);
-			}
-		}
-		else
-		{
-			std::cout << "Unsuccessful request GET " << std::endl;
-		}
-
-		//std::cout << rates << std::endl;
-	}
-	catch (const nlohmann::json::exception& e)
-	{
-		std::cerr << "Error while parsing: " << e.what() << std::endl;
-		return -1;
-	}
-
-	return 0;
+    this->SQLRequest("select * from Accounts", this->callback_accounts);
+    this->SQLRequest("select * from Notes", this->callback_notes);
+    this->notes.reverse();
+    this->SQLRequest("select * from Rates", this->callback_rates);
 }
-*/
+
+std::list<wlt::Account> wlt::eWallet::getAccountList()
+{
+    std::list<wlt::Account> ret_list;
+    for(auto it = this->accounts.begin(); it != this->accounts.end(); it++)
+    {
+        ret_list.push_back(*it);
+    }
+    return ret_list;
+}
+
+std::list<wlt::Note> wlt::eWallet::getNoteListAll()
+{
+    std::list<wlt::Note> ret_list;
+    for(auto it = this->notes.begin(); it != this->notes.end(); it++)
+    {
+        ret_list.push_back(*it);
+    }
+    return ret_list;
+}
+
+std::list<wlt::Note> wlt::eWallet::getNoteListLast(int size)
+{
+    std::list<wlt::Note> ret_list;
+    std::list<wlt::Note>::iterator it = this->notes.begin();
+
+    for(int i = 0; i < size && it != this->notes.end(); i++)
+    {
+        ret_list.push_back(*it);
+        it++;
+    }
+    return ret_list;
+
+}
+
+std::string wlt::eWallet::getCurrencyFromAccName(std::string AccName)
+{
+    int index = this->_getAccount(AccName);
+    if(index == -1)
+        return "";
+
+    std::list<wlt::Account>::iterator iter = this->accounts.begin();
+    std::advance(iter, index-1);
+
+    return iter->getCurrencyType();
+
+}
+
+unsigned int wlt::eWallet::AccountsCount()
+{
+    return this->accounts.size();
+}
+
+double wlt::eWallet::getTotalCount()
+{
+    double total = 0;
+    for(auto it = this->accounts.begin(); it != this->accounts.end(); it++)
+    {
+        if(this->Currency_Type == it->getCurrencyType())
+        {
+            total += it->getCount();
+        }
+        else
+        {
+            total += it->getCount() / this->Rates[it->getCurrencyType()];
+        }
+    }
+
+    return total;
+}
+
+std::vector<double> wlt::eWallet::getDataStat(unsigned int limit_days)
+{
+    std::vector<double> values = std::vector<double>(10, 0);
+    QDate currentDate = QDate::currentDate();
+
+    for(auto iter = this->notes.begin(); iter != this->notes.end(); iter++)
+    {
+        QDate noteDate(iter->getYear(), iter->getMonth(), iter->getDay());
+
+        if( noteDate.daysTo(currentDate) > limit_days)
+            break;
+
+        if(static_cast<int>(iter->getOperation() ) != 1 && static_cast<int>(iter->getOperation() ) != 0 )
+            continue;
+
+        double data_value = iter->getValue();
+        wlt::Account note_account = this->getAccountByName(iter->getAccountName());
+
+        if(note_account.getCurrencyType() != this->Currency_Type)
+            data_value = data_value / this->Rates[note_account.getCurrencyType()];
+
+        switch(static_cast<int>(iter->getCategory() ) )
+        {
+            case 0: values[0] = values[0] + data_value;
+                break;
+            case 1: values[1] = values[1] + data_value;
+                break;
+            case 2: values[2] = values[2] + data_value;
+                break;
+            case 3: values[3] = values[3] + data_value;
+                break;
+            case 4: values[4] = values[4] + data_value;
+                break;
+            case 5: values[5] = values[5] + data_value;
+                break;
+            case 6: values[6] = values[6] + data_value;
+                break;
+            case 7: values[7] = values[7] + data_value;
+                break;
+            case 8: values[8] = values[8] + data_value;
+                break;
+            case 9: values[9] = values[9] + data_value;
+                break;
+            default: ;
+                break;
+        }
+    }
+
+    return values;
+
+}
+
+std::list<wlt::Note> wlt::eWallet::getNotesUptoDate(unsigned int days)
+{
+    std::list<wlt::Note> ret_list;
+
+    QDate currentDate = QDate::currentDate();
+
+    for(auto iter = this->notes.begin(); iter != this->notes.end(); iter++)
+    {
+        QDate noteDate(iter->getYear(), iter->getMonth(), iter->getDay());
+
+        if( noteDate.daysTo(currentDate) > days)
+            break;
+
+       ret_list.push_back(*iter);
+    }
+
+    return ret_list;
+}
+
+void wlt::eWallet::setCurrencyType(std::string currency_type)
+{
+    std::string prev_cur = this->Currency_Type;
+
+    this->Currency_Type = currency_type;
+
+    if(this->fillRatesTables() == -1)
+        this->Currency_Type = prev_cur;
+    else
+        this->SQLRequest("UPDATE Settings SET BaseCurrency='" + currency_type + "'" , this->callback);
+}
+
