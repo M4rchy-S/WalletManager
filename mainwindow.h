@@ -7,12 +7,20 @@
 #include <QCursor>
 #include <QImage>
 #include <QtCharts>
+#include <QTranslator>
+#include <QLibraryInfo>
+#include <QDebug>
+#include <QMessageBox>
+#include <QUrl>
+#include <QDesktopServices>
+#include <QPropertyAnimation>
 
 #include <accountcardwidget.h>
 #include <notecardwidget.h>
 #include <eWallet.h>
 
 #include <vector>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,6 +38,7 @@ public:
 private:
     Ui::MainWindow *ui;
     wlt::eWallet *wallet;
+    QTranslator qtLanguageTranslator;
     unsigned long ID = 1;
     unsigned short last_index = 0;
 
@@ -37,6 +46,7 @@ private:
     void sideBarConnects();
     void formsInit();
     void settingsFormInit();
+    void contactFormInit();
 
     //      Update functions
     void editAccountFormUpdate();
@@ -67,6 +77,7 @@ private:
     QString fromIntToMonth(unsigned int month);
     void removeLayoutWidgets(QLayout* layout);
     QPixmap getWhiteIcon(std::string);
+    void connectSlice(QPieSlice *slice);
 
 public slots:
     void StackedWidgetIndexChanged();
@@ -86,6 +97,7 @@ public slots:
     void DeleteNote();
 
     void CurrencyChanged();
+    void ChangeTranslation();
 
 
 };

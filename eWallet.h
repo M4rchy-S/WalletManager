@@ -34,10 +34,11 @@ namespace wlt {
 		const std::string db_file_name = "mydbtest.db";
 		
         std::string Currency_Type = "EUR";
-        std::string LocalLanguage = "EN";
+        std::string LocalLanguage = "en";
 		unsigned short LocalMonth = 1;
 
 		std::map<std::string, double> Rates;
+        bool isRateValidData = true;
 
 
 		int _getAccount(const std::string &str);	
@@ -94,11 +95,13 @@ namespace wlt {
         //  Utility functions
 		std::string getCurrencyType();
 		std::string getLocalLanguage();
+        int setLocalLanguage(std::string lang="en");
         std::list<wlt::Account> getAccountList();
         std::list<wlt::Note> getNoteListAll();
         std::list<wlt::Note> getNoteListLast(int size=5);
         std::string getCurrencyFromAccName(std::string AccName);
         unsigned int AccountsCount();
+        unsigned int NotesCount();
 
         std::vector<double> getDataStat(unsigned int limit_days=30);
         std::list<wlt::Note> getNotesUptoDate(unsigned int days=30);
@@ -114,6 +117,7 @@ namespace wlt {
         std::list<std::string> getRatesNames();
         std::list<double> getRatesValues();
         int inRatesTable(std::string key);
+        bool isRatesEmpty();
 
 
 	};

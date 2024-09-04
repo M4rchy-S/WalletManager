@@ -10,12 +10,24 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->wallet = new wlt::eWallet();
 
+    //      Setup Language
+    if(qtLanguageTranslator.load(QString(":/lang/language_") + QString::fromStdString(this->wallet->getLocalLanguage()) + QString(".qm")) )
+    {
+        qApp->installTranslator(&qtLanguageTranslator);
+        ui->retranslateUi(this);
+    }
+
     QObject::connect(ui->mainWindow, &QStackedWidget::currentChanged, this, &MainWindow::StackedWidgetIndexChanged);
 
+    //  Init connects
     this->sideBarConnects();
     this->formsInit();
     this->settingsFormInit();
+    this->contactFormInit();
 
+    this->fillRatesData();
+
+    //  Fill dynamic data
     this->fillAccountData();
     this->fillNoteData();
     this->fillRatesData();
@@ -53,7 +65,7 @@ void MainWindow::StackedWidgetIndexChanged()
     }
     else if(ui->mainWindow->currentIndex() == 7)
     {
-        this->fillRatesData();
+        //this->fillRatesData();
     }
     else if(ui->mainWindow->currentIndex() == 8)
     {
@@ -343,7 +355,21 @@ void MainWindow::DeleteNote()
 
 void MainWindow::CurrencyChanged()
 {
-    this->wallet->setCurrencyType(ui->MainCurrencyComboBox->currentText().toStdString());
+    if(!this->wallet->isRatesEmpty())
+    {
+        this->wallet->setCurrencyType(ui->MainCurrencyComboBox->currentText().toStdString());
+        this->fillRatesData();
+    }
+    else
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::critical(nullptr, tr("No connection"),
+                                      tr("You cannot change currency while not connected your rates data from internet"),
+                                      QMessageBox::Ok);
+        QObject::disconnect(ui->MainCurrencyComboBox, &QComboBox::currentTextChanged, this, &MainWindow::CurrencyChanged);
+        ui->MainCurrencyComboBox->setCurrentText(QString::fromStdString(this->wallet->getCurrencyType()));
+        QObject::connect(ui->MainCurrencyComboBox, &QComboBox::currentTextChanged, this, &MainWindow::CurrencyChanged);
+    }
 }
 
 // -------------------------------------
@@ -393,21 +419,21 @@ void MainWindow::formsInit()
 
     //      Add note form
 
-    ui->OperationComboBox->addItem( QString("Расход") );
-    ui->OperationComboBox->addItem( QString("Доход") );
-    ui->OperationComboBox->addItem( QString("Перевод") );
+    ui->OperationComboBox->addItem(  tr("Outome")  );
+    ui->OperationComboBox->addItem(  tr("Income")  );
+    ui->OperationComboBox->addItem(  tr("Transfer")  );
 
     //Category { FOOD, PRODUCT, HOUSE, TRANSPORT, CAR, ENTERTAINMENT, NETWORK, FINANCE_EXPENSIES, TRANSFER_OPERATION, EARNINGS};
-    ui->categoryComboBox->addItem("Еда и рестораны");
-    ui->categoryComboBox->addItem("Товары");
-    ui->categoryComboBox->addItem("Здоровье");
-    ui->categoryComboBox->addItem("Публичный транспорт");
-    ui->categoryComboBox->addItem("Транспортное средство");
-    ui->categoryComboBox->addItem("Развлечения");
-    ui->categoryComboBox->addItem("Связь и интернет");
-    ui->categoryComboBox->addItem("Финансовые расходы");
-    ui->categoryComboBox->addItem("Финансовые переводы");
-    ui->categoryComboBox->addItem("Доход");
+    ui->categoryComboBox->addItem(tr("Food and restaraunts") );
+    ui->categoryComboBox->addItem(tr("Products") );
+    ui->categoryComboBox->addItem(tr("Healthcare") );
+    ui->categoryComboBox->addItem(tr("Public transport") );
+    ui->categoryComboBox->addItem(tr("Vehicle") );
+    ui->categoryComboBox->addItem(tr("Entertainment") );
+    ui->categoryComboBox->addItem(tr("Communication and internet") );
+    ui->categoryComboBox->addItem(tr("Financial expenses") );
+    ui->categoryComboBox->addItem(tr("Financial transfer") );
+    ui->categoryComboBox->addItem(tr("Income") );
 
     //      EDIT combobox items !!!
 
@@ -432,20 +458,20 @@ void MainWindow::formsInit()
     QObject::connect(ui->accountMainComboBox, &QComboBox::currentTextChanged, this, &MainWindow::AccountComboBoxChangedInAddNoteForm);
 
     //  Edit Note Form
-    ui->OperationComboBox_edit->addItem( QString("Расход") );
-    ui->OperationComboBox_edit->addItem( QString("Доход") );
-    ui->OperationComboBox_edit->addItem( QString("Перевод") );
+    ui->OperationComboBox_edit->addItem( QString( tr("Income") ) );
+    ui->OperationComboBox_edit->addItem( QString( tr("Outcome") ) );
+    ui->OperationComboBox_edit->addItem( QString( tr("Transfer") ) );
 
-    ui->categoryComboBox_edit->addItem("Еда и рестораны");
-    ui->categoryComboBox_edit->addItem("Товары");
-    ui->categoryComboBox_edit->addItem("Здоровье");
-    ui->categoryComboBox_edit->addItem("Публичный транспорт");
-    ui->categoryComboBox_edit->addItem("Транспортное средство");
-    ui->categoryComboBox_edit->addItem("Развлечения");
-    ui->categoryComboBox_edit->addItem("Связь и интернет");
-    ui->categoryComboBox_edit->addItem("Финансовые расходы");
-    ui->categoryComboBox_edit->addItem("Финансовые переводы");
-    ui->categoryComboBox_edit->addItem("Доход");
+    ui->categoryComboBox_edit->addItem(tr("Food and restaraunts"));
+    ui->categoryComboBox_edit->addItem(tr("Products") );
+    ui->categoryComboBox_edit->addItem(tr("Healthcare"));
+    ui->categoryComboBox_edit->addItem(tr("Public transport") );
+    ui->categoryComboBox_edit->addItem(tr("Vehicle"));
+    ui->categoryComboBox_edit->addItem(tr("Entertainment"));
+    ui->categoryComboBox_edit->addItem(tr("Communication and internet") );
+    ui->categoryComboBox_edit->addItem(tr("Financial expenses") );
+    ui->categoryComboBox_edit->addItem(tr("Financial transfer") );
+    ui->categoryComboBox_edit->addItem(tr("Income"));
 
     for(auto it = lst_acc.begin(); it != lst_acc.end(); it++)
     {
@@ -478,32 +504,71 @@ void MainWindow::settingsFormInit()
     ui->MainCurrencyComboBox->setCurrentText(QString::fromStdString(this->wallet->getCurrencyType()));
     QObject::connect(ui->MainCurrencyComboBox, &QComboBox::currentTextChanged, this, &MainWindow::CurrencyChanged);
 
+    ui->MainCurIcon->setPixmap(this->getWhiteIcon(":/icons/base-currenct.svg"));
+
     //  Main Language
-    ui->languageComboBox->addItem(QString("EN"));
-    ui->languageComboBox->addItem(QString("RU"));
-    ui->languageComboBox->setCurrentText(QString::fromStdString(this->wallet->getLocalLanguage()));
+    ui->languageComboBox->addItem(QString("English"));
+    ui->languageComboBox->addItem(QString("Русский"));
+
+    QString db_lang = QString::fromStdString( this->wallet->getLocalLanguage() );
+    if(db_lang == "en")
+        ui->languageComboBox->setCurrentText("English");
+    else if(db_lang == "ru")
+        ui->languageComboBox->setCurrentText("Русский");
+
+    QObject::connect(ui->languageComboBox, &QComboBox::currentIndexChanged, this, this->ChangeTranslation);
+
+    ui->LangIcon->setPixmap(this->getWhiteIcon(":/setting-icons/icons/language-solid.svg"));
+}
+
+void MainWindow::contactFormInit()
+{
+    ui->BugReportButton->setIcon(this->getWhiteIcon(":/setting-icons/icons/bug-solid.svg"));
+    ui->BugReportButton->setIconSize(QSize(23,22));
+    ui->BugReportButton->setCursor(Qt::PointingHandCursor);
+
+    ui->DonateButton->setIcon(this->getWhiteIcon(":/setting-icons/icons/circle-dollar-to-slot-solid.svg"));
+    ui->DonateButton->setIconSize(QSize(23,22));
+    ui->DonateButton->setCursor(Qt::PointingHandCursor);
+
+    //  Url connects
+    QObject::connect(ui->BugReportButton, &QPushButton::clicked, this,
+        [=]()
+        {
+            QUrl url("https://www.example.com");
+            QDesktopServices::openUrl(url);
+        }
+    );
+
+    QObject::connect(ui->DonateButton, &QPushButton::clicked, this,
+        [=]()
+        {
+            QUrl url("https://www.google.com");
+            QDesktopServices::openUrl(url);
+        }
+    );
 }
 
 
 void MainWindow::sideBarConnects()
 {
     QObject::connect(ui->mainButton, &QPushButton::clicked, ui->mainWindow, [=](){ui->mainWindow->setCurrentIndex(0);} );
-    QObject::connect(ui->mainButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText("Главная");} );
+    QObject::connect(ui->mainButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText(tr("Main") ) ;} );
 
     QObject::connect(ui->notesButton, &QPushButton::clicked, ui->mainWindow, [=](){ui->mainWindow->setCurrentIndex(5);});
-    QObject::connect(ui->notesButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText("Операции");});
+    QObject::connect(ui->notesButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText(tr("Operations") ) ;});
 
     QObject::connect(ui->statisticButton, &QPushButton::clicked, ui->mainWindow, [=](){ui->mainWindow->setCurrentIndex(6);});
-    QObject::connect(ui->statisticButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText("Статистика");});
+    QObject::connect(ui->statisticButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText(tr("Statistic") ) ;});
 
     QObject::connect(ui->ratesButton, &QPushButton::clicked, ui->mainWindow, [=](){ui->mainWindow->setCurrentIndex(7);});
-    QObject::connect(ui->ratesButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText("Курсы валют");});
+    QObject::connect(ui->ratesButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText(tr("Rates") ) ;});
 
     QObject::connect(ui->settingsButton, &QPushButton::clicked, ui->mainWindow, [=](){ui->mainWindow->setCurrentIndex(8);});
-    QObject::connect(ui->settingsButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText("Настройки");});
+    QObject::connect(ui->settingsButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText(tr("Settings") ) ;});
 
-    QObject::connect(ui->supportButton, &QPushButton::clicked, ui->mainWindow,[=](){ui->mainWindow->setCurrentIndex(9);});
-    QObject::connect(ui->supportButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText("Поддержать");});
+    QObject::connect(ui->contactsButton, &QPushButton::clicked, ui->mainWindow,[=](){ui->mainWindow->setCurrentIndex(9);});
+    QObject::connect(ui->contactsButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText(tr("Support") ) ;});
 
     ui->mainButton->setIcon(this->getWhiteIcon(":/nav-bar/house.svg"));
     ui->mainButton->setIconSize(QSize(23,22));
@@ -524,6 +589,10 @@ void MainWindow::sideBarConnects()
     ui->settingsButton->setIcon(this->getWhiteIcon(":/nav-bar/gear.svg"));
     ui->settingsButton->setIconSize(QSize(23,22));
     ui->settingsButton->setCursor(Qt::PointingHandCursor);
+
+    ui->contactsButton->setIcon(this->getWhiteIcon(":/nav-bar/mail.svg"));
+    ui->contactsButton->setIconSize(QSize(23,22));
+    ui->contactsButton->setCursor(Qt::PointingHandCursor);
 
     // ui->supportButton->setIcon(this->getWhiteIcon(":/nav-bar/house.svg"));
     // ui->supportButton->setIconSize(QSize(23,22));
@@ -556,7 +625,7 @@ void MainWindow::fillAccountData()
     //  Create add_acc_button
     if(this->wallet->AccountsCount() < 10)
     {
-        QPushButton *addAccountButton = new QPushButton("Добавить новый счёт");
+        QPushButton *addAccountButton = new QPushButton(tr( "Create new Account" ) );
         addAccountButton->setMaximumSize(500, 80);
         addAccountButton->setMinimumSize(350, 80);
         addAccountButton->setStyleSheet("QPushButton{background-color:#1F2021; font: 600 14pt \"Segoe UI\";color:#ECEBDF;border: 5px solid #112D9F; } QPushButton:hover{background-color:#112D9F; font: 600 14pt \"Segoe UI\";color:#ECEBDF;}");
@@ -698,6 +767,19 @@ void MainWindow::fillNoteData()
     {
         ui->NoteList->layout()->addWidget( this->addNoteCard(it->getOperation(), it->getCategoryString(), it->getAccountName(), it->getAccountNameAddit(), it->getValue(),
                                                             it->getDetails(), it->getDay(), it->getMonth(), it->getYear(), it->getId()) );
+    }
+
+    if(note_lst.size() == 0)
+    {
+        QLabel *emptyNoteListLabel = new QLabel();
+        emptyNoteListLabel->setText("No operations yet");
+
+        emptyNoteListLabel->setAlignment(Qt::AlignHCenter);
+        emptyNoteListLabel->setMinimumSize(QSize(250, 50));
+        emptyNoteListLabel->setMaximumSize(QSize(1500, 50));
+        emptyNoteListLabel->setStyleSheet("QLabel{font: 600 14pt \"Segoe UI\";color:#ECEBDF;}");
+        ui->NoteList->layout()->addWidget(emptyNoteListLabel);
+        return;
     }
 
     QSpacerItem *vertical_spacer = new QSpacerItem(30, 40, QSizePolicy::Maximum, QSizePolicy::Expanding);
@@ -871,6 +953,20 @@ void MainWindow::fillRatesData()
 {
     this->removeLayoutWidgets(ui->RatesList->layout());
 
+    if(this->wallet->isRatesEmpty())
+    {
+        QLabel *emptyNoteListLabel = new QLabel();
+        emptyNoteListLabel->setText("Conect to internet to get Rates data");
+
+        emptyNoteListLabel->setAlignment(Qt::AlignHCenter);
+        emptyNoteListLabel->setMinimumSize(QSize(250, 50));
+        emptyNoteListLabel->setMaximumSize(QSize(1500, 50));
+        emptyNoteListLabel->setStyleSheet("QLabel{font: 600 14pt \"Segoe UI\";color:#ECEBDF;}");
+        ui->RatesList->layout()->addWidget(emptyNoteListLabel);
+
+        return;
+    }
+
     std::list<std::string> rate_names = wallet->getRatesNames();
     std::list<double> rate_values = wallet->getRatesValues();
 
@@ -923,68 +1019,112 @@ void MainWindow::updateStatPage()
 {
     this->removeLayoutWidgets(ui->statScrollWidget->layout());
 
+    if(this->wallet->NotesCount() == 0)
+    {
+
+        QLabel *emptyNoteListLabel = new QLabel();
+        emptyNoteListLabel->setText("No operations");
+
+        emptyNoteListLabel->setAlignment(Qt::AlignHCenter);
+        emptyNoteListLabel->setMinimumSize(QSize(250, 50));
+        emptyNoteListLabel->setMaximumSize(QSize(1500, 50));
+        emptyNoteListLabel->setStyleSheet("QLabel{font: 600 14pt \"Segoe UI\";color:#ECEBDF;}");
+        ui->statScrollWidget->layout()->addWidget(emptyNoteListLabel);
+
+
+        return;
+    }
+
+
+
     //  Get import data
     std::vector<double> data_notes = this->wallet->getDataStat();
     std::vector<double> percent_data = this->getPercentFromVector(data_notes);
 
     //  Create pie chart
 
-    QPieSlice *FoodSlice = new QPieSlice("Food", data_notes[0]);
-    //FoodSlice->setLabelVisible();
+    QPieSlice *FoodSlice = new QPieSlice(tr("Food ") + QString::number(percent_data[0], 'f', 1) + QString("%"), data_notes[0]);
     FoodSlice->setColor(QColor("#4A5A73"));
     FoodSlice->setLabelBrush(QBrush(QColor("#4A5A73")));
     FoodSlice->setBorderColor(QColor("#4A5A73"));
+    FoodSlice->setLabelFont(QFont("Segoe UI", 10, QFont::Bold));
+    this->connectSlice(FoodSlice);
 
-    QPieSlice *ProductSlice = new QPieSlice("Products", data_notes[1]);
+    QPieSlice *ProductSlice = new QPieSlice(tr("Products ") + QString::number(percent_data[1], 'f', 1) + QString("%"), data_notes[1]);
     ProductSlice->setColor(QColor("#009DFF"));
     ProductSlice->setLabelBrush(QBrush(QColor("#009DFF")));
     ProductSlice->setBorderColor(QColor("#009DFF"));
+    ProductSlice->setLabelFont(QFont("Segoe UI", 10, QFont::Bold));
+    this->connectSlice(ProductSlice);
 
-    QPieSlice *HealthSlice = new QPieSlice("Healthcare", data_notes[2]);
+    QPieSlice *HealthSlice = new QPieSlice(tr("Healthcare ") + QString::number(percent_data[2], 'f', 1) + QString("%"), data_notes[2]);
     HealthSlice->setColor(QColor("#0FAE56"));
     HealthSlice->setLabelBrush(QBrush(QColor("#0FAE56")));
     HealthSlice->setBorderColor(QColor("#0FAE56"));
+    HealthSlice->setLabelFont(QFont("Segoe UI", 10, QFont::Bold));
+    this->connectSlice(HealthSlice);
 
-    QPieSlice *PublicSlice = new QPieSlice("Public Transport", data_notes[3]);
+    QPieSlice *PublicSlice = new QPieSlice(tr("Public transport ") + QString::number(percent_data[3], 'f', 1) + QString("%"), data_notes[3]);
     PublicSlice->setColor(QColor("#9B9489"));
     PublicSlice->setLabelBrush(QBrush(QColor("#9B9489")));
     PublicSlice->setBorderColor(QColor("#9B9489"));
+    PublicSlice->setLabelFont(QFont("Segoe UI", 10, QFont::Bold));
+    this->connectSlice(PublicSlice);
 
-    QPieSlice *VehicleSlice = new QPieSlice("Vehicle", data_notes[4]);
+    QPieSlice *VehicleSlice = new QPieSlice(tr("Vehicle ") + QString::number(percent_data[4], 'f', 1) + QString("%"), data_notes[4]);
     VehicleSlice->setColor(QColor("#95005E"));
     VehicleSlice->setLabelBrush(QBrush(QColor("#95005E")));
     VehicleSlice->setBorderColor(QColor("#95005E"));
+    VehicleSlice->setLabelFont(QFont("Segoe UI", 10, QFont::Bold));
+    this->connectSlice(VehicleSlice);
 
-    QPieSlice *EnterSlice = new QPieSlice("Entertainment", data_notes[5]);
+    QPieSlice *EnterSlice = new QPieSlice(tr("Entertainment ") + QString::number(percent_data[5], 'f', 1) + QString("%"), data_notes[5]);
     EnterSlice->setColor(QColor("#CC8B00"));
     EnterSlice->setLabelBrush(QBrush(QColor("#CC8B00")));
     EnterSlice->setBorderColor(QColor("#CC8B00"));
+    EnterSlice->setLabelFont(QFont("Segoe UI", 10, QFont::Bold));
+    this->connectSlice(EnterSlice);
 
-    QPieSlice *NetworkSlice = new QPieSlice("Network", data_notes[6]);
+    QPieSlice *NetworkSlice = new QPieSlice(tr("Network ") + QString::number(percent_data[6], 'f', 1) + QString("%"), data_notes[6]);
     NetworkSlice->setColor(QColor("#0B3CFF"));
     NetworkSlice->setLabelBrush(QBrush(QColor("#0B3CFF")));
     NetworkSlice->setBorderColor(QColor("#0B3CFF"));
+    NetworkSlice->setLabelFont(QFont("Segoe UI", 10, QFont::Bold));
+    this->connectSlice(NetworkSlice);
 
-    QPieSlice *FinExpSlice = new QPieSlice("Finance Expensies", data_notes[7]);
+    QPieSlice *FinExpSlice = new QPieSlice(tr("Finance Expensies ") + QString::number(percent_data[7], 'f', 1) + QString("%"), data_notes[7]);
     FinExpSlice->setColor(QColor("#AFBB02"));
     FinExpSlice->setLabelBrush(QBrush(QColor("#AFBB02")));
     FinExpSlice->setBorderColor(QColor("#AFBB02"));
+    FinExpSlice->setLabelFont(QFont("Segoe UI", 10, QFont::Bold));
+    this->connectSlice(FinExpSlice);
 
-    QPieSlice *TransSlice = new QPieSlice("Transfer operation", data_notes[8]);
+    QPieSlice *TransSlice = new QPieSlice(tr("Transfer ") + QString::number(percent_data[8], 'f', 1) + QString("%"), data_notes[8]);
     TransSlice->setColor(QColor("#C95045"));
     TransSlice->setLabelBrush(QBrush(QColor("#C95045")));
     TransSlice->setBorderColor(QColor("#C95045"));
+    TransSlice->setLabelFont(QFont("Segoe UI", 10, QFont::Bold));
+    this->connectSlice(TransSlice);
 
     QPieSeries *series = new QPieSeries();
-    series->append(FoodSlice);
-    series->append(ProductSlice);
-    series->append(HealthSlice);
-    series->append(PublicSlice);
-    series->append(VehicleSlice);
-    series->append(EnterSlice);
-    series->append(NetworkSlice);
-    series->append(FinExpSlice);
-    series->append(TransSlice);
+    if(data_notes[0] != 0)
+        series->append(FoodSlice);
+    if(data_notes[1] != 0)
+        series->append(ProductSlice);
+    if(data_notes[2] != 0)
+        series->append(HealthSlice);
+    if(data_notes[3] != 0)
+        series->append(PublicSlice);
+    if(data_notes[4] != 0)
+        series->append(VehicleSlice);
+    if(data_notes[5] != 0)
+        series->append(EnterSlice);
+    if(data_notes[6] != 0)
+        series->append(NetworkSlice);
+    if(data_notes[7] != 0)
+        series->append(FinExpSlice);
+    if(data_notes[8] != 0)
+        series->append(TransSlice);
     series->setHoleSize(0.35);
 
 
@@ -998,7 +1138,7 @@ void MainWindow::updateStatPage()
 
     QChartView *chartview = new QChartView(chart);
     chartview->setRenderHint(QPainter::Antialiasing);
-    chartview->setMaximumSize(QSize(600,600));
+    chartview->setMaximumSize(QSize(1500,1500));
     chartview->setMinimumSize(QSize(600,600));
 
     ui->statScrollWidget->layout()->addWidget(chartview);
@@ -1171,17 +1311,17 @@ void MainWindow::addInfoCard()
     //  Create labels
     QLabel *categLabel = new QLabel();
     categLabel->setStyleSheet("font: 600 13pt \"Segoe UI\";color:#ECEBDF;");
-    categLabel->setText( QString("Категория") );
+    categLabel->setText( QString( tr( "Category" ) ));
      categLabel->setMinimumSize(QSize(150, 50));
 
     QLabel *percentLabel = new QLabel();
     percentLabel->setStyleSheet("font: 600 13pt \"Segoe UI\";color:#ECEBDF;");
-    percentLabel->setText( QString("Процент")  );
+    percentLabel->setText( QString(tr("Percentage") )  );
     percentLabel->setMinimumSize(QSize(50, 50));
 
     QLabel *valueLabel = new QLabel();
     valueLabel->setStyleSheet("font: 600 13pt \"Segoe UI\";color:#ECEBDF;");
-    valueLabel->setText( QString("Количество")  );
+    valueLabel->setText( QString(tr("Value") ) );
     valueLabel->setMinimumSize(QSize(100, 50));
 
     layout->addWidget(iconBG);
@@ -1227,6 +1367,19 @@ void MainWindow::fillFullNotesPage()
                                                             it->getDetails(), it->getDay(), it->getMonth(), it->getYear(), it->getId()) );
     }
 
+    if(note_lst.size() == 0)
+    {
+        QLabel *emptyNoteListLabel = new QLabel();
+        emptyNoteListLabel->setText("No operations yet");
+
+        emptyNoteListLabel->setAlignment(Qt::AlignHCenter);
+        emptyNoteListLabel->setMinimumSize(QSize(250, 50));
+        emptyNoteListLabel->setMaximumSize(QSize(1500, 50));
+        emptyNoteListLabel->setStyleSheet("QLabel{font: 600 14pt \"Segoe UI\";color:#ECEBDF;}");
+        ui->fullNoteList->layout()->addWidget(emptyNoteListLabel);
+        return;
+    }
+
     QSpacerItem *vertical_spacer = new QSpacerItem(30, 40, QSizePolicy::Maximum, QSizePolicy::Expanding);
     ui->fullNoteList->layout()->addItem(vertical_spacer);
 }
@@ -1263,7 +1416,8 @@ void MainWindow::removeLayoutWidgets(QLayout* layout)
 
 QString MainWindow::fromIntToMonth(unsigned int monthNumber)
 {
-    QStringList months = {"января", "февраля", "марта", "апреля", "мая", "июня", "июля","августа","сентября","октября","ноября","декабря"};
+    QStringList months = {tr("January"), tr("February"), tr("March"), tr("April"), tr("May"), tr("Juny"),
+                          tr("July"),tr("August"),tr("September"),tr("October"),tr("November"),("December")};
     if (monthNumber >= 1 && monthNumber <= 12) {
         return months[monthNumber - 1];
     }
@@ -1288,6 +1442,56 @@ QPixmap MainWindow::getWhiteIcon(std::string path)
         }
     }
     return QPixmap::fromImage(image);
+}
+
+void MainWindow::ChangeTranslation()
+{
+    if(ui->languageComboBox->currentText() == QString("English"))
+        this->wallet->setLocalLanguage("en");
+    else if(ui->languageComboBox->currentText() == QString("Русский"))
+        this->wallet->setLocalLanguage("ru");
+
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(nullptr, tr("Restart program"),
+                                  tr("You must restart the application to apply the changes. Restart now?"),
+                                  QMessageBox::Yes | QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+        qApp->quit();
+}
+
+void MainWindow::connectSlice(QPieSlice *slice)
+{
+    QObject::connect(slice, &QPieSlice::hovered, [slice](bool hovered)
+                     {
+
+                         static QPropertyAnimation *animation = nullptr;
+                         if(hovered)
+                         {
+                             slice->setLabelVisible(true);
+                             animation = new QPropertyAnimation(slice, "borderWidth");
+                             animation->setDuration(200);
+                             animation->setStartValue(1);
+                             animation->setEndValue(10);
+                             animation->setEasingCurve(QEasingCurve::InOutQuart);
+                             animation->start();
+                         }
+                         else
+                         {
+                             if(animation)
+                             {
+                                 animation->deleteLater();
+                                 animation = nullptr;
+                             }
+                             slice->setLabelVisible(false);
+                             animation = new QPropertyAnimation(slice, "borderWidth");
+                             animation->setDuration(200);
+                             animation->setStartValue(10);
+                             animation->setEndValue(1);
+                             animation->setEasingCurve(QEasingCurve::InOutQuart);
+                             animation->start();
+                         }
+                     }
+    );
 }
 
 
