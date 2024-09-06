@@ -36,8 +36,8 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
-TRANSLATIONS +=
-TRANSLATIONS +=
+TRANSLATIONS += language_ru.ts
+TRANSLATIONS += language_ua.ts
 
 
 
@@ -60,3 +60,7 @@ RESOURCES += \
     languages.qrc
 
 DISTFILES +=
+
+VERSION = 1.0.0
+
+ICON ""

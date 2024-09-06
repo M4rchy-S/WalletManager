@@ -364,7 +364,7 @@ void MainWindow::CurrencyChanged()
     {
         QMessageBox::StandardButton reply;
         reply = QMessageBox::critical(nullptr, tr("No connection"),
-                                      tr("You cannot change currency while not connected your rates data from internet"),
+                                      tr("No rates tables loaded. Connect to internet connection."),
                                       QMessageBox::Ok);
         QObject::disconnect(ui->MainCurrencyComboBox, &QComboBox::currentTextChanged, this, &MainWindow::CurrencyChanged);
         ui->MainCurrencyComboBox->setCurrentText(QString::fromStdString(this->wallet->getCurrencyType()));
@@ -419,7 +419,7 @@ void MainWindow::formsInit()
 
     //      Add note form
 
-    ui->OperationComboBox->addItem(  tr("Outome")  );
+    ui->OperationComboBox->addItem(  tr("Outcome")  );
     ui->OperationComboBox->addItem(  tr("Income")  );
     ui->OperationComboBox->addItem(  tr("Transfer")  );
 
@@ -427,7 +427,7 @@ void MainWindow::formsInit()
     ui->categoryComboBox->addItem(tr("Food and restaraunts") );
     ui->categoryComboBox->addItem(tr("Products") );
     ui->categoryComboBox->addItem(tr("Healthcare") );
-    ui->categoryComboBox->addItem(tr("Public transport") );
+    ui->categoryComboBox->addItem(tr("Public Transport") );
     ui->categoryComboBox->addItem(tr("Vehicle") );
     ui->categoryComboBox->addItem(tr("Entertainment") );
     ui->categoryComboBox->addItem(tr("Communication and internet") );
@@ -458,9 +458,9 @@ void MainWindow::formsInit()
     QObject::connect(ui->accountMainComboBox, &QComboBox::currentTextChanged, this, &MainWindow::AccountComboBoxChangedInAddNoteForm);
 
     //  Edit Note Form
-    ui->OperationComboBox_edit->addItem( QString( tr("Income") ) );
-    ui->OperationComboBox_edit->addItem( QString( tr("Outcome") ) );
-    ui->OperationComboBox_edit->addItem( QString( tr("Transfer") ) );
+    ui->OperationComboBox_edit->addItem(  tr("Income")  );
+    ui->OperationComboBox_edit->addItem(  tr("Outcome")  );
+    ui->OperationComboBox_edit->addItem(  tr("Transfer")  );
 
     ui->categoryComboBox_edit->addItem(tr("Food and restaraunts"));
     ui->categoryComboBox_edit->addItem(tr("Products") );
@@ -535,7 +535,7 @@ void MainWindow::contactFormInit()
     QObject::connect(ui->BugReportButton, &QPushButton::clicked, this,
         [=]()
         {
-            QUrl url("https://www.example.com");
+            QUrl url("https://docs.google.com/forms/d/e/1FAIpQLSeh9zxZDbWYW5kBU1ZUV8ETvm2jGT8JhbwNsECWI3VSwfS5gA/viewform");
             QDesktopServices::openUrl(url);
         }
     );
@@ -543,7 +543,7 @@ void MainWindow::contactFormInit()
     QObject::connect(ui->DonateButton, &QPushButton::clicked, this,
         [=]()
         {
-            QUrl url("https://www.google.com");
+            QUrl url("https://ko-fi.com/softbitdeveloper");
             QDesktopServices::openUrl(url);
         }
     );
@@ -568,7 +568,7 @@ void MainWindow::sideBarConnects()
     QObject::connect(ui->settingsButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText(tr("Settings") ) ;});
 
     QObject::connect(ui->contactsButton, &QPushButton::clicked, ui->mainWindow,[=](){ui->mainWindow->setCurrentIndex(9);});
-    QObject::connect(ui->contactsButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText(tr("Support") ) ;});
+    QObject::connect(ui->contactsButton, &QPushButton::clicked, ui->namebar_label, [=](){ui->namebar_label->setText(tr("Contacts") ) ;});
 
     ui->mainButton->setIcon(this->getWhiteIcon(":/nav-bar/house.svg"));
     ui->mainButton->setIconSize(QSize(23,22));
@@ -772,7 +772,7 @@ void MainWindow::fillNoteData()
     if(note_lst.size() == 0)
     {
         QLabel *emptyNoteListLabel = new QLabel();
-        emptyNoteListLabel->setText("No operations yet");
+        emptyNoteListLabel->setText(tr("No operations yet"));
 
         emptyNoteListLabel->setAlignment(Qt::AlignHCenter);
         emptyNoteListLabel->setMinimumSize(QSize(250, 50));
@@ -813,57 +813,69 @@ QWidget *MainWindow::addNoteCard(wlt::Operation operation, std::string category,
     //QPixmap iconImage(":/icons/money-bill-solid.svg");
     //QPixmap iconImage = this->getWhiteIcon(":/icons/money-bill-solid.svg");
 
+    QString categoryString = QString::fromStdString(category);
+
 
     //      Dynamic icon changing
-        if(category == "Food")
+        if(categoryString == "Food")
         {
             iconImage = this->getWhiteIcon(":/icons/food.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #4A5A73;}");
+            categoryString = tr("Food");
         }
-        else if(category == "Products")
+        else if(categoryString == "Products")
         {
             iconImage = this->getWhiteIcon(":/icons/shopping-bag.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #009DFF;}");
+            categoryString = tr("Products");
         }
-        else if(category == "Healthcare")
+        else if(categoryString == "Healthcare")
         {
             iconImage = this->getWhiteIcon(":/icons/med.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #0FAE56;}");
+            categoryString = tr("Healthcare");
         }
-        else if(category == "Public Transport")
+        else if(categoryString == "Public Transport")
         {
             iconImage = this->getWhiteIcon(":/icons/bus.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #9B9489;}");
+            categoryString = tr("Public Transport");
         }
-        else if(category == "Vehicle")
+        else if(categoryString == "Vehicle")
         {
             iconImage = this->getWhiteIcon(":/icons/car.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #95005E;}");
+            categoryString = tr("Vehicle");
         }
-        else if(category == "Entertainment")
+        else if(categoryString == "Entertainment")
         {
             iconImage = this->getWhiteIcon(":/icons/smile.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #CC8B00;}");
+            categoryString = tr("Entertainment");
         }
-        else if(category == "Network")
+        else if(categoryString == "Communication and internet")
         {
             iconImage = this->getWhiteIcon(":/icons/wifi.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #0B3CFF;}");
+            categoryString = tr("Communication and internet");
         }
-        else if(category ==  "Finance Expensies")
+        else if(categoryString ==  "Finance Expensies")
         {
             iconImage = this->getWhiteIcon(":/icons/money.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #AFBB02;}");
+            categoryString = tr("Finance Expensies");
         }
-        else if(category ==   "Transfer operation")
+        else if(categoryString ==   "Transfer operation")
         {
             iconImage = this->getWhiteIcon(":/icons/money-trans.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #C95045;}");
+            categoryString = tr("Transfer operation");
         }
-        else if(category ==  "Earnings")
+        else if(categoryString ==  "Earnings")
         {
             iconImage = this->getWhiteIcon(":/icons/coins.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #C1B318;}");
+            categoryString = tr("Earnings");
         }
         else
         {
@@ -956,7 +968,7 @@ void MainWindow::fillRatesData()
     if(this->wallet->isRatesEmpty())
     {
         QLabel *emptyNoteListLabel = new QLabel();
-        emptyNoteListLabel->setText("Conect to internet to get Rates data");
+        emptyNoteListLabel->setText( tr("Connect to internet to get Rates data") );
 
         emptyNoteListLabel->setAlignment(Qt::AlignHCenter);
         emptyNoteListLabel->setMinimumSize(QSize(250, 50));
@@ -1023,7 +1035,7 @@ void MainWindow::updateStatPage()
     {
 
         QLabel *emptyNoteListLabel = new QLabel();
-        emptyNoteListLabel->setText("No operations");
+        emptyNoteListLabel->setText( tr("No operations") );
 
         emptyNoteListLabel->setAlignment(Qt::AlignHCenter);
         emptyNoteListLabel->setMinimumSize(QSize(250, 50));
@@ -1085,7 +1097,7 @@ void MainWindow::updateStatPage()
     EnterSlice->setLabelFont(QFont("Segoe UI", 10, QFont::Bold));
     this->connectSlice(EnterSlice);
 
-    QPieSlice *NetworkSlice = new QPieSlice(tr("Network ") + QString::number(percent_data[6], 'f', 1) + QString("%"), data_notes[6]);
+    QPieSlice *NetworkSlice = new QPieSlice(tr("Communication and internet ") + QString::number(percent_data[6], 'f', 1) + QString("%"), data_notes[6]);
     NetworkSlice->setColor(QColor("#0B3CFF"));
     NetworkSlice->setLabelBrush(QBrush(QColor("#0B3CFF")));
     NetworkSlice->setBorderColor(QColor("#0B3CFF"));
@@ -1156,7 +1168,7 @@ void MainWindow::updateStatPage()
     this->addStatCard("Public Transport", "", data_notes[3], percent_data[3]);
     this->addStatCard("Vehicle", "", data_notes[4], percent_data[4]);
     this->addStatCard("Entertainment", "", data_notes[5], percent_data[5]);
-    this->addStatCard("Network", "", data_notes[6], percent_data[6]);
+    this->addStatCard("Communication and internet", "", data_notes[6], percent_data[6]);
     this->addStatCard("Finance Expensies", "", data_notes[7], percent_data[7]);
     this->addStatCard("Transfer operation", "", data_notes[8], percent_data[8]);
 }
@@ -1184,57 +1196,68 @@ void MainWindow::addStatCard(std::string category, std::string icon_color, doubl
     //QPixmap iconImage(":/icons/money-bill-solid.svg");
     //QPixmap iconImage = this->getWhiteIcon(":/icons/money-bill-solid.svg");
 
+    QString categoryString = QString::fromStdString(category);
 
     //      Dynamic icon changing
-    if(category == "Food")
+    if(categoryString == "Food")
     {
         iconImage = this->getWhiteIcon(":/icons/food.svg");
         iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #4A5A73;}");
+        categoryString = tr("Food");
     }
-    else if(category == "Products")
+    else if(categoryString == "Products")
     {
         iconImage = this->getWhiteIcon(":/icons/shopping-bag.svg");
         iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #009DFF;}");
+        categoryString = tr("Products");
     }
-    else if(category == "Healthcare")
+    else if(categoryString == "Healthcare")
     {
         iconImage = this->getWhiteIcon(":/icons/med.svg");
         iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #0FAE56;}");
+        categoryString = tr("Healthcare");
     }
-    else if(category == "Public Transport")
+    else if(categoryString == "Public Transport")
     {
         iconImage = this->getWhiteIcon(":/icons/bus.svg");
         iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #9B9489;}");
+        categoryString = tr("Public Transport");
     }
-    else if(category == "Vehicle")
+    else if(categoryString == "Vehicle")
     {
         iconImage = this->getWhiteIcon(":/icons/car.svg");
         iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #95005E;}");
+        categoryString = tr("Vehicle");
     }
-    else if(category == "Entertainment")
+    else if(categoryString == "Entertainment")
     {
         iconImage = this->getWhiteIcon(":/icons/smile.svg");
         iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #CC8B00;}");
+        categoryString = tr("Entertainment");
     }
-    else if(category == "Network")
+    else if(categoryString == "Communication and internet")
     {
         iconImage = this->getWhiteIcon(":/icons/wifi.svg");
         iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #0B3CFF;}");
+        categoryString = tr("Communication and internet");
     }
-    else if(category ==  "Finance Expensies")
+    else if(categoryString ==  "Finance Expensies")
     {
         iconImage = this->getWhiteIcon(":/icons/money.svg");
         iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #AFBB02;}");
+        categoryString = tr("Finance Expensies");
     }
-    else if(category ==   "Transfer operation")
+    else if(categoryString ==   "Transfer operation")
     {
         iconImage = this->getWhiteIcon(":/icons/money-trans.svg");
         iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #C95045;}");
+        categoryString = tr("Transfer operation");
     }
-    else if(category ==  "Earnings")
+    else if(categoryString ==  "Earnings")
     {
         iconImage = this->getWhiteIcon(":/icons/coins.svg");
         iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #C1B318;}");
+        categoryString = tr("Earnings");
     }
     else
     {
@@ -1252,7 +1275,7 @@ void MainWindow::addStatCard(std::string category, std::string icon_color, doubl
     //  Create labels
     QLabel *categLabel = new QLabel();
     categLabel->setStyleSheet("font: 600 12pt \"Segoe UI\";color:#ECEBDF;");
-    categLabel->setText(QString::fromStdString(category) );
+    categLabel->setText( categoryString );
     categLabel->setMinimumSize(QSize(150, 50));
 
     QLabel *percentLabel = new QLabel();
@@ -1370,7 +1393,7 @@ void MainWindow::fillFullNotesPage()
     if(note_lst.size() == 0)
     {
         QLabel *emptyNoteListLabel = new QLabel();
-        emptyNoteListLabel->setText("No operations yet");
+        emptyNoteListLabel->setText( tr("No operations yet") );
 
         emptyNoteListLabel->setAlignment(Qt::AlignHCenter);
         emptyNoteListLabel->setMinimumSize(QSize(250, 50));
@@ -1387,6 +1410,7 @@ void MainWindow::fillFullNotesPage()
 void MainWindow::updateSettingsForm()
 {
     // !!!! Problem with efficiency !!!!!
+    //  add disconncets and connects
 
     // ui->MainCurrencyComboBox->setCurrentText(QString::fromStdString(wallet->getCurrencyType() ) );
     // ui->languageComboBox->setCurrentText(QString::fromStdString(wallet->getLocalLanguage() ) );

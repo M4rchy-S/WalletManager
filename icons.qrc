@@ -40,4 +40,10 @@
         <file>icons/dollar-sign.svg</file>
         <file>icons/language-solid.svg</file>
     </qresource>
+    <qresource prefix="/main">
+        <file alias="main.ico">icons/main.ico</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>images/logo.png</file>
+    </qresource>
 </RCC>
