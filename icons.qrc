@@ -1,0 +1,49 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="wallet-solid.svg">icons/wallet-solid.svg</file>
+        <file alias="money-bill-solid.svg">icons/money-bill-1-solid.svg</file>
+        <file alias="shopping-bag.svg">icons/bag-shopping-solid.svg</file>
+        <file alias="bus.svg">icons/bus-solid.svg</file>
+        <file alias="car.svg">icons/car-solid.svg</file>
+        <file alias="coins.svg">icons/coins-solid.svg</file>
+        <file alias="smile.svg">icons/face-smile-solid.svg</file>
+        <file alias="heart.svg">icons/heart-solid.svg</file>
+        <file alias="med.svg">icons/kit-medical-solid.svg</file>
+        <file alias="base-currenct.svg">icons/money-bill-1-regular.svg</file>
+        <file alias="money.svg">icons/money-bill-solid.svg</file>
+        <file alias="money-trans.svg">icons/money-bill-transfer-solid.svg</file>
+        <file alias="food.svg">icons/utensils-solid.svg</file>
+        <file alias="wifi.svg">icons/wifi-solid.svg</file>
+        <file alias="info.svg">icons/info-solid.svg</file>
+    </qresource>
+    <qresource prefix="/left-icons">
+        <file alias="arrow-down.svg">icons/arrow-down-solid.svg</file>
+        <file alias="arrows-trans.svg">icons/arrow-right-arrow-left-solid.svg</file>
+        <file alias="arrow-up.svg">icons/arrow-up-solid.svg</file>
+    </qresource>
+    <qresource prefix="/utility-icons">
+        <file alias="edit.svg">icons/pen-to-square-regular.svg</file>
+        <file alias="plus.svg">icons/plus-solid.svg</file>
+    </qresource>
+    <qresource prefix="/nav-bar">
+        <file alias="chart.svg">icons/chart-pie-solid.svg</file>
+        <file alias="dollar.svg">icons/dollar-sign-solid.svg</file>
+        <file alias="gear.svg">icons/gear-solid.svg</file>
+        <file alias="house.svg">icons/house-solid.svg</file>
+        <file alias="note.svg">icons/note-sticky-solid.svg</file>
+        <file alias="glass-dollar.svg">icons/magnifying-glass-dollar-solid.svg</file>
+        <file alias="mail.svg">icons/envelope-solid.svg</file>
+    </qresource>
+    <qresource prefix="/setting-icons">
+        <file>icons/bug-solid.svg</file>
+        <file>icons/circle-dollar-to-slot-solid.svg</file>
+        <file>icons/dollar-sign.svg</file>
+        <file>icons/language-solid.svg</file>
+    </qresource>
+    <qresource prefix="/main">
+        <file alias="main.ico">icons/main.ico</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>images/logo.png</file>
+    </qresource>
+</RCC>
