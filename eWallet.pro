@@ -59,8 +59,15 @@ RESOURCES += \
     icons.qrc \
     languages.qrc
 
-DISTFILES +=
+DISTFILES += \
+    app_icon.rc
 
 VERSION = 1.0.0
 
-ICON ""
+RC_FILE = app_icon.rc
+
+#win32
+#{
+#    CONFIG += embed_manifest_exe
+#    QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:"level='requireAdministrator'"
+#}

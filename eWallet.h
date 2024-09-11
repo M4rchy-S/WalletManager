@@ -10,6 +10,8 @@
 #include <QEventLoop>
 #include <QUrlQuery>
 #include <QDate>
+#include <QStandardPaths>
+#include <QDir>
 
 //#include <iostream>  // !! Delete after
 
@@ -31,7 +33,7 @@ namespace wlt {
 		std::list<wlt::Account> accounts;
 		std::list<wlt::Note> notes;
 		
-		const std::string db_file_name = "mydbtest.db";
+        const std::string db_file_name = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).toStdString() + "/" + "walletdata.db";
 		
         std::string Currency_Type = "EUR";
         std::string LocalLanguage = "en";

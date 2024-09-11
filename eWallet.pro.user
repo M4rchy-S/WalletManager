@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 13.0.1, 2024-09-06T14:00:29. -->
+<!-- Written by QtCreator 13.0.1, 2024-09-06T21:18:21. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -92,7 +92,7 @@
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Qt-6.7.0 Shared MinGW</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Qt-6.7.0 Shared MinGW</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{37b7058f-64cd-49ed-96a3-ec8cd8b30acc}</value>
-   <value type="qlonglong" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
+   <value type="qlonglong" key="ProjectExplorer.Target.ActiveBuildConfiguration">1</value>
    <value type="qlonglong" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="qlonglong" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
@@ -248,7 +248,7 @@
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/AdminP/Documents/eWallet/build/Qt_6_7_0_Shared_MinGW-Debug</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/AdminP/Documents/eWallet/build/Qt_6_7_0_Shared_MinGW-Release</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

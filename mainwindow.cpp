@@ -277,6 +277,10 @@ void MainWindow::CreateNote()
 
     if(operation_type == 2)
     {
+        wlt::Account addit_acc = wallet->getAccountByName(  ui->accountAdditComboBox->currentText().toStdString() );
+        wlt::Account main_acc = wallet->getAccountByName(  ui->accountMainComboBox->currentText().toStdString() );
+        if(main_acc.getCount() <= -10000000000 || addit_acc.getCount() >= 100000000000)
+            return;
         //  Transfer operation
         wallet->Create_Note( static_cast<wlt::Operation>( ui->OperationComboBox->currentIndex() ), static_cast<wlt::Category>( ui->categoryComboBox->currentIndex() ),
                             ui->accountMainComboBox->currentText().toStdString(), ui->accountAdditComboBox->currentText().toStdString() ,Value, details_str.toStdString());
@@ -719,6 +723,7 @@ void MainWindow::addAccountCard(std::string AccName, double Count, std::string C
         QString accountNamefromCard = QString::fromStdString( accountCard->getAccountName() );
         this->addNoteFormUpdate();
         ui->accountMainComboBox->setCurrentText(accountNamefromCard);
+        this->AccountComboBoxChangedInAddNoteForm();
         ui->mainWindow->setCurrentIndex(1);
     });
 
@@ -904,7 +909,8 @@ QWidget *MainWindow::addNoteCard(wlt::Operation operation, std::string category,
         acc_name_correct.insert(21, '.');
     }
 
-    categoryLabel->setText( QString::fromStdString(category) );
+    // categoryLabel->setText( QString::fromStdString(category) );
+    categoryLabel->setText( categoryString );
     accountNameLabel->setText( acc_name_correct );
 
     categoryLabel->setStyleSheet("QLabel{font: 600 14pt \"Segoe UI\";color:#ECEBDF;}");
