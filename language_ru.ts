@@ -53,7 +53,7 @@ Beta Version 1.0</source>
     <message>
         <location filename="mainwindow.ui" line="558"/>
         <source>Last Operations</source>
-        <translation type="unfinished">Поcледнии записи</translation>
+        <translation>Поcледнии записи</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="751"/>

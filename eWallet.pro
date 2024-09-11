@@ -28,6 +28,7 @@ SOURCES += \
 HEADERS += \
     account.h \
     accountcardwidget.h \
+    app_info.rc \
     eWallet.h \
     mainwindow.h \
     note.h \
@@ -59,15 +60,11 @@ RESOURCES += \
     icons.qrc \
     languages.qrc
 
-DISTFILES += \
-    app_icon.rc
+DISTFILES +=
 
 VERSION = 1.0.0
 
-RC_FILE = app_icon.rc
+RC_FILE = app_info.rc
 
-#win32
-#{
-#    CONFIG += embed_manifest_exe
-#    QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:"level='requireAdministrator'"
-#}
+
+
