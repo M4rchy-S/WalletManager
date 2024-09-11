@@ -9,257 +9,252 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="110"/>
-        <source>DWallet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="177"/>
+        <location filename="mainwindow.ui" line="189"/>
         <source> Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="220"/>
+        <location filename="mainwindow.ui" line="232"/>
         <source> Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="257"/>
+        <location filename="mainwindow.ui" line="306"/>
         <source> Rates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="294"/>
+        <location filename="mainwindow.ui" line="269"/>
         <source> Statistic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="331"/>
+        <location filename="mainwindow.ui" line="343"/>
         <source> Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="371"/>
+        <location filename="mainwindow.ui" line="383"/>
         <source> Contacts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="411"/>
-        <source>Wallet Desktop
-Alpha Version 1.0</source>
+        <location filename="mainwindow.ui" line="423"/>
+        <source>Desktop Wallet Manager
+Beta Version 1.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="466"/>
+        <location filename="mainwindow.ui" line="478"/>
         <location filename="mainwindow.cpp" line="556"/>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="546"/>
+        <location filename="mainwindow.ui" line="558"/>
         <source>Last Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="739"/>
+        <location filename="mainwindow.ui" line="751"/>
         <source>Your Balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="766"/>
+        <location filename="mainwindow.ui" line="778"/>
         <source>123.23 USD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="839"/>
+        <location filename="mainwindow.ui" line="851"/>
         <source>List of Accounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1052"/>
+        <location filename="mainwindow.ui" line="1064"/>
         <source>Create Note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1080"/>
-        <location filename="mainwindow.ui" line="2634"/>
+        <location filename="mainwindow.ui" line="1092"/>
+        <location filename="mainwindow.ui" line="2646"/>
         <source>Operation Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1196"/>
-        <location filename="mainwindow.ui" line="2307"/>
+        <location filename="mainwindow.ui" line="1208"/>
+        <location filename="mainwindow.ui" line="2319"/>
         <source>Choosen Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1308"/>
-        <location filename="mainwindow.ui" line="2419"/>
+        <location filename="mainwindow.ui" line="1320"/>
+        <location filename="mainwindow.ui" line="2431"/>
         <source>Target Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1414"/>
-        <location filename="mainwindow.ui" line="2255"/>
+        <location filename="mainwindow.ui" line="1426"/>
+        <location filename="mainwindow.ui" line="2267"/>
         <location filename="mainwindow.cpp" line="1337"/>
         <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1516"/>
-        <location filename="mainwindow.ui" line="2136"/>
+        <location filename="mainwindow.ui" line="1528"/>
+        <location filename="mainwindow.ui" line="2148"/>
         <location filename="mainwindow.cpp" line="1347"/>
         <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1536"/>
-        <location filename="mainwindow.ui" line="1794"/>
-        <location filename="mainwindow.ui" line="2275"/>
-        <location filename="mainwindow.ui" line="3099"/>
+        <location filename="mainwindow.ui" line="1548"/>
+        <location filename="mainwindow.ui" line="1806"/>
+        <location filename="mainwindow.ui" line="2287"/>
+        <location filename="mainwindow.ui" line="3111"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1555"/>
-        <location filename="mainwindow.ui" line="2239"/>
+        <location filename="mainwindow.ui" line="1567"/>
+        <location filename="mainwindow.ui" line="2251"/>
         <source>Details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1616"/>
-        <location filename="mainwindow.ui" line="1878"/>
-        <location filename="mainwindow.ui" line="2584"/>
-        <location filename="mainwindow.ui" line="3013"/>
+        <location filename="mainwindow.ui" line="1628"/>
+        <location filename="mainwindow.ui" line="1890"/>
+        <location filename="mainwindow.ui" line="2596"/>
+        <location filename="mainwindow.ui" line="3025"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1651"/>
-        <location filename="mainwindow.ui" line="1913"/>
+        <location filename="mainwindow.ui" line="1663"/>
+        <location filename="mainwindow.ui" line="1925"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1730"/>
+        <location filename="mainwindow.ui" line="1742"/>
         <source>Create Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1758"/>
-        <location filename="mainwindow.ui" line="3079"/>
+        <location filename="mainwindow.ui" line="1770"/>
+        <location filename="mainwindow.ui" line="3091"/>
         <source>Account Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1819"/>
+        <location filename="mainwindow.ui" line="1831"/>
         <source>Start Balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1838"/>
-        <location filename="mainwindow.ui" line="3063"/>
+        <location filename="mainwindow.ui" line="1850"/>
+        <location filename="mainwindow.ui" line="3075"/>
         <source>Currency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2111"/>
+        <location filename="mainwindow.ui" line="2123"/>
         <source>Edit Note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2549"/>
-        <location filename="mainwindow.ui" line="2978"/>
+        <location filename="mainwindow.ui" line="2561"/>
+        <location filename="mainwindow.ui" line="2990"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2619"/>
-        <location filename="mainwindow.ui" line="3048"/>
+        <location filename="mainwindow.ui" line="2631"/>
+        <location filename="mainwindow.ui" line="3060"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2821"/>
+        <location filename="mainwindow.ui" line="2833"/>
         <source>Edit Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2849"/>
+        <location filename="mainwindow.ui" line="2861"/>
         <source>Balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3299"/>
+        <location filename="mainwindow.ui" line="3311"/>
         <location filename="mainwindow.cpp" line="559"/>
         <source>Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3417"/>
+        <location filename="mainwindow.ui" line="3429"/>
         <source>Data for last 120 days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3487"/>
+        <location filename="mainwindow.ui" line="3499"/>
         <source>Chart of expenses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3514"/>
+        <location filename="mainwindow.ui" line="3526"/>
         <source>Data for last 30 days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3681"/>
+        <location filename="mainwindow.ui" line="3693"/>
         <source>Currency Pairs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3838"/>
-        <location filename="mainwindow.ui" line="3937"/>
-        <location filename="mainwindow.ui" line="4022"/>
-        <location filename="mainwindow.ui" line="4101"/>
+        <location filename="mainwindow.ui" line="3850"/>
+        <location filename="mainwindow.ui" line="3949"/>
+        <location filename="mainwindow.ui" line="4034"/>
+        <location filename="mainwindow.ui" line="4113"/>
         <source>EUR/USD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3862"/>
-        <location filename="mainwindow.ui" line="3967"/>
-        <location filename="mainwindow.ui" line="4046"/>
-        <location filename="mainwindow.ui" line="4125"/>
+        <location filename="mainwindow.ui" line="3874"/>
+        <location filename="mainwindow.ui" line="3979"/>
+        <location filename="mainwindow.ui" line="4058"/>
+        <location filename="mainwindow.ui" line="4137"/>
         <source>1.09</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4177"/>
+        <location filename="mainwindow.ui" line="4189"/>
         <location filename="mainwindow.cpp" line="568"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4325"/>
+        <location filename="mainwindow.ui" line="4337"/>
         <source>Main currency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4436"/>
+        <location filename="mainwindow.ui" line="4448"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4665"/>
+        <location filename="mainwindow.ui" line="4677"/>
         <location filename="mainwindow.cpp" line="571"/>
         <source>Contacts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4756"/>
+        <location filename="mainwindow.ui" line="4768"/>
         <source> Bug report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4712"/>
+        <location filename="mainwindow.ui" line="4724"/>
         <source> Donate to us</source>
         <translation type="unfinished"></translation>
     </message>
@@ -305,7 +300,6 @@ Alpha Version 1.0</source>
         <location filename="mainwindow.cpp" line="428"/>
         <location filename="mainwindow.cpp" line="466"/>
         <location filename="mainwindow.cpp" line="830"/>
-        <location filename="mainwindow.cpp" line="1166"/>
         <location filename="mainwindow.cpp" line="1212"/>
         <source>Products</source>
         <translation type="unfinished"></translation>
@@ -314,7 +308,6 @@ Alpha Version 1.0</source>
         <location filename="mainwindow.cpp" line="429"/>
         <location filename="mainwindow.cpp" line="467"/>
         <location filename="mainwindow.cpp" line="836"/>
-        <location filename="mainwindow.cpp" line="1167"/>
         <location filename="mainwindow.cpp" line="1218"/>
         <source>Healthcare</source>
         <translation type="unfinished"></translation>
@@ -328,7 +321,6 @@ Alpha Version 1.0</source>
         <location filename="mainwindow.cpp" line="431"/>
         <location filename="mainwindow.cpp" line="469"/>
         <location filename="mainwindow.cpp" line="848"/>
-        <location filename="mainwindow.cpp" line="1169"/>
         <location filename="mainwindow.cpp" line="1230"/>
         <source>Vehicle</source>
         <translation type="unfinished"></translation>
@@ -337,7 +329,6 @@ Alpha Version 1.0</source>
         <location filename="mainwindow.cpp" line="432"/>
         <location filename="mainwindow.cpp" line="470"/>
         <location filename="mainwindow.cpp" line="854"/>
-        <location filename="mainwindow.cpp" line="1170"/>
         <location filename="mainwindow.cpp" line="1236"/>
         <source>Entertainment</source>
         <translation type="unfinished"></translation>
@@ -346,7 +337,6 @@ Alpha Version 1.0</source>
         <location filename="mainwindow.cpp" line="433"/>
         <location filename="mainwindow.cpp" line="471"/>
         <location filename="mainwindow.cpp" line="860"/>
-        <location filename="mainwindow.cpp" line="1171"/>
         <location filename="mainwindow.cpp" line="1242"/>
         <source>Communication and internet</source>
         <translation type="unfinished"></translation>
@@ -386,7 +376,6 @@ Alpha Version 1.0</source>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="824"/>
-        <location filename="mainwindow.cpp" line="1165"/>
         <location filename="mainwindow.cpp" line="1206"/>
         <source>Food</source>
         <translation type="unfinished"></translation>
@@ -394,21 +383,18 @@ Alpha Version 1.0</source>
     <message>
         <location filename="mainwindow.cpp" line="430"/>
         <location filename="mainwindow.cpp" line="842"/>
-        <location filename="mainwindow.cpp" line="1168"/>
         <location filename="mainwindow.cpp" line="1224"/>
         <source>Public Transport</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="866"/>
-        <location filename="mainwindow.cpp" line="1172"/>
         <location filename="mainwindow.cpp" line="1248"/>
         <source>Finance Expensies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="872"/>
-        <location filename="mainwindow.cpp" line="1173"/>
         <location filename="mainwindow.cpp" line="1254"/>
         <source>Transfer operation</source>
         <translation type="unfinished"></translation>

@@ -12,6 +12,11 @@ wlt::eWallet::eWallet()
 		//	Create db manually
         //std::cout << "Creating db" << std::endl;
 
+        QDir dir;
+        if( !dir.exists(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)) )
+        {
+            dir.mkdir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+        }
 		 
 		const char *sql = "CREATE TABLE \"Accounts\" ( \
 			\"Name\"	TEXT NOT NULL, \
@@ -1640,6 +1645,9 @@ void wlt::eWallet::setCurrencyType(std::string currency_type)
     if(this->Rates.find(this->Currency_Type) == this->Rates.end())
         this->Currency_Type = prev_cur;
     else
+    {
         this->SQLRequest("UPDATE Settings SET BaseCurrency='" + currency_type + "'" , this->callback);
+        this->fillRatesTables();
+    }
 }
 
