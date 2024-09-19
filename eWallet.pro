@@ -60,7 +60,7 @@ RESOURCES += \
     icons.qrc \
     languages.qrc
 
-DISTFILES +=
+#DISTFILES +=
 
 VERSION = 1.0.0
 

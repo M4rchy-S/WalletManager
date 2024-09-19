@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
-    <height>720</height>
+    <width>1440</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,12 +26,6 @@
    <size>
     <width>1440</width>
     <height>900</height>
-   </size>
-  </property>
-  <property name="baseSize">
-   <size>
-    <width>1024</width>
-    <height>725</height>
    </size>
   </property>
   <property name="font">
@@ -653,8 +647,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>478</width>
-                  <height>564</height>
+                  <width>570</width>
+                  <height>744</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_9">
@@ -952,8 +946,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>500</width>
-                    <height>404</height>
+                    <width>568</width>
+                    <height>584</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_24">

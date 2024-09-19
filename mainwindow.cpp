@@ -513,12 +513,15 @@ void MainWindow::settingsFormInit()
     //  Main Language
     ui->languageComboBox->addItem(QString("English"));
     ui->languageComboBox->addItem(QString("Русский"));
+    ui->languageComboBox->addItem(QString("Українська"));
 
     QString db_lang = QString::fromStdString( this->wallet->getLocalLanguage() );
     if(db_lang == "en")
         ui->languageComboBox->setCurrentText("English");
     else if(db_lang == "ru")
         ui->languageComboBox->setCurrentText("Русский");
+    else if(db_lang == "ua")
+        ui->languageComboBox->setCurrentText("Українська");
 
     QObject::connect(ui->languageComboBox, &QComboBox::currentIndexChanged, this, this->ChangeTranslation);
 
@@ -710,6 +713,9 @@ void MainWindow::addAccountCard(std::string AccName, double Count, std::string C
 
     addButton->setStyleSheet("QPushButton{border: 3px solid #112D9F;background-color:#1F2021;border-radius:15px;} QPushButton:hover{background-color:#112D9F;border-radius:15px;}");
     editButton->setStyleSheet("QPushButton{border: 3px solid #112D9F;background-color:#1F2021;border-radius:15px;} QPushButton:hover{background-color:#112D9F;border-radius:15px;}");
+
+    addButton->setToolTip(tr("Create new note"));
+    editButton->setToolTip(tr("Edit this account"));
 
     QGraphicsOpacityEffect *effect_add = new QGraphicsOpacityEffect();
     QGraphicsOpacityEffect *effect_edit = new QGraphicsOpacityEffect();
@@ -1007,8 +1013,8 @@ void MainWindow::addRateCard(std::string Rate_cur_name, double rate_value)
     QWidget *RateWidget = new QWidget();
     QGridLayout *layout = new QGridLayout(RateWidget);
 
-    RateWidget->setMinimumSize(QSize(90, 60));
-    RateWidget->setMaximumSize(QSize(90, 60));
+    RateWidget->setMinimumSize(QSize(100, 60));
+    RateWidget->setMaximumSize(QSize(100, 60));
     RateWidget->setStyleSheet("QWidget{border:1.5px solid white;border-radius:10px;background-color:rgb(31, 32, 33);}");
 
     QLabel *rate_cur_label = new QLabel();
@@ -1447,7 +1453,7 @@ void MainWindow::removeLayoutWidgets(QLayout* layout)
 QString MainWindow::fromIntToMonth(unsigned int monthNumber)
 {
     QStringList months = {tr("January"), tr("February"), tr("March"), tr("April"), tr("May"), tr("Juny"),
-                          tr("July"),tr("August"),tr("September"),tr("October"),tr("November"),("December")};
+                          tr("July"),tr("August"),tr("September"),tr("October"),tr("November"),tr("December")};
     if (monthNumber >= 1 && monthNumber <= 12) {
         return months[monthNumber - 1];
     }
@@ -1480,13 +1486,14 @@ void MainWindow::ChangeTranslation()
         this->wallet->setLocalLanguage("en");
     else if(ui->languageComboBox->currentText() == QString("Русский"))
         this->wallet->setLocalLanguage("ru");
+    else if(ui->languageComboBox->currentText() == QString("Українська"))
+        this->wallet->setLocalLanguage("ua");
 
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(nullptr, tr("Restart program"),
-                                  tr("You must restart the application to apply the changes. Restart now?"),
-                                  QMessageBox::Yes | QMessageBox::No);
-    if (reply == QMessageBox::Yes)
-        qApp->quit();
+
+    QMessageBox::information(nullptr, tr("Language changed"), tr("You must restart the application to apply the changes."), QMessageBox::Ok );
+
+
+
 }
 
 void MainWindow::connectSlice(QPieSlice *slice)

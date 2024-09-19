@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="uk_UA">
 <context>
     <name>MainWindow</name>
     <message>
@@ -11,32 +11,32 @@
     <message>
         <location filename="mainwindow.ui" line="189"/>
         <source> Main</source>
-        <translation type="unfinished"></translation>
+        <translation> Головна</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="232"/>
         <source> Operations</source>
-        <translation type="unfinished"></translation>
+        <translation> Операції</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="306"/>
         <source> Rates</source>
-        <translation type="unfinished"></translation>
+        <translation> Валютні пари</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="269"/>
         <source> Statistic</source>
-        <translation type="unfinished"></translation>
+        <translation> Статистика</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="343"/>
         <source> Settings</source>
-        <translation type="unfinished"></translation>
+        <translation> Налаштування</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="383"/>
         <source> Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation> Контакти</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="423"/>
@@ -46,19 +46,19 @@ Beta Version 1.0</source>
     </message>
     <message>
         <location filename="mainwindow.ui" line="478"/>
-        <location filename="mainwindow.cpp" line="556"/>
+        <location filename="mainwindow.cpp" line="560"/>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation>Головна</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="558"/>
         <source>Last Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Останні операції</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="751"/>
         <source>Your Balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Поточний баланс</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="778"/>
@@ -68,44 +68,44 @@ Beta Version 1.0</source>
     <message>
         <location filename="mainwindow.ui" line="851"/>
         <source>List of Accounts</source>
-        <translation type="unfinished"></translation>
+        <translation>Список рахунків</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1064"/>
         <source>Create Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Создати запис операції</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1092"/>
         <location filename="mainwindow.ui" line="2646"/>
         <source>Operation Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип операції</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1208"/>
         <location filename="mainwindow.ui" line="2319"/>
         <source>Choosen Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Обраний рахунок</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1320"/>
         <location filename="mainwindow.ui" line="2431"/>
         <source>Target Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Цільовий рахунок</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1426"/>
         <location filename="mainwindow.ui" line="2267"/>
-        <location filename="mainwindow.cpp" line="1337"/>
+        <location filename="mainwindow.cpp" line="1346"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Категорія</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1528"/>
         <location filename="mainwindow.ui" line="2148"/>
-        <location filename="mainwindow.cpp" line="1347"/>
+        <location filename="mainwindow.cpp" line="1356"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Значення</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1548"/>
@@ -119,7 +119,7 @@ Beta Version 1.0</source>
         <location filename="mainwindow.ui" line="1567"/>
         <location filename="mainwindow.ui" line="2251"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Деталі</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1628"/>
@@ -127,88 +127,88 @@ Beta Version 1.0</source>
         <location filename="mainwindow.ui" line="2596"/>
         <location filename="mainwindow.ui" line="3025"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1663"/>
         <location filename="mainwindow.ui" line="1925"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1742"/>
         <source>Create Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Создати рахунок</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1770"/>
         <location filename="mainwindow.ui" line="3091"/>
         <source>Account Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва рахунку</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1831"/>
         <source>Start Balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Початковий баланс</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1850"/>
         <location filename="mainwindow.ui" line="3075"/>
         <source>Currency</source>
-        <translation type="unfinished"></translation>
+        <translation>Валюта</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2123"/>
         <source>Edit Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагування запису</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2561"/>
         <location filename="mainwindow.ui" line="2990"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2631"/>
         <location filename="mainwindow.ui" line="3060"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2833"/>
         <source>Edit Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагування рахунку</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2861"/>
         <source>Balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Баланс</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="3311"/>
-        <location filename="mainwindow.cpp" line="559"/>
+        <location filename="mainwindow.cpp" line="563"/>
         <source>Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Список операцій</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="3429"/>
         <source>Data for last 120 days</source>
-        <translation type="unfinished"></translation>
+        <translation>Дані за останні 120 днів</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="3499"/>
         <source>Chart of expenses</source>
-        <translation type="unfinished"></translation>
+        <translation>Графік витрат</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="3526"/>
         <source>Data for last 30 days</source>
-        <translation type="unfinished"></translation>
+        <translation>Дані за останні 30 днів</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="3693"/>
         <source>Currency Pairs</source>
-        <translation type="unfinished"></translation>
+        <translation>Валютні пари</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="3850"/>
@@ -228,307 +228,322 @@ Beta Version 1.0</source>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4189"/>
-        <location filename="mainwindow.cpp" line="568"/>
+        <location filename="mainwindow.cpp" line="572"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4337"/>
         <source>Main currency</source>
-        <translation type="unfinished"></translation>
+        <translation>Головна валюта</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4448"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Мова програми</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4677"/>
-        <location filename="mainwindow.cpp" line="571"/>
+        <location filename="mainwindow.cpp" line="575"/>
         <source>Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Контакти</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4768"/>
         <source> Bug report</source>
-        <translation type="unfinished"></translation>
+        <translation> Повідомити про баг</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4724"/>
         <source> Donate to us</source>
-        <translation type="unfinished"></translation>
+        <translation> Пожертвувати нам</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="366"/>
+        <location filename="mainwindow.cpp" line="370"/>
         <source>No connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Немає зв&apos;язку</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="367"/>
+        <location filename="mainwindow.cpp" line="371"/>
         <source>No rates tables loaded. Connect to internet connection.</source>
         <oldsource>You cannot change currency while not connected your rates data from internet</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Таблиця вилютних пар не була завантажена. Підключитеся до мережі.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="422"/>
-        <location filename="mainwindow.cpp" line="462"/>
+        <location filename="mainwindow.cpp" line="426"/>
+        <location filename="mainwindow.cpp" line="466"/>
         <source>Outcome</source>
         <oldsource>Outome</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="423"/>
-        <location filename="mainwindow.cpp" line="436"/>
-        <location filename="mainwindow.cpp" line="461"/>
-        <location filename="mainwindow.cpp" line="474"/>
-        <source>Income</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="424"/>
-        <location filename="mainwindow.cpp" line="463"/>
-        <source>Transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Витрата</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="427"/>
+        <location filename="mainwindow.cpp" line="440"/>
         <location filename="mainwindow.cpp" line="465"/>
-        <source>Food and restaraunts</source>
-        <translation type="unfinished"></translation>
+        <location filename="mainwindow.cpp" line="478"/>
+        <source>Income</source>
+        <translation>Дохід</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="428"/>
-        <location filename="mainwindow.cpp" line="466"/>
-        <location filename="mainwindow.cpp" line="830"/>
-        <location filename="mainwindow.cpp" line="1212"/>
-        <source>Products</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="429"/>
         <location filename="mainwindow.cpp" line="467"/>
-        <location filename="mainwindow.cpp" line="836"/>
-        <location filename="mainwindow.cpp" line="1218"/>
-        <source>Healthcare</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="468"/>
-        <source>Public transport</source>
-        <translation type="unfinished"></translation>
+        <source>Transfer</source>
+        <translation>Перевод</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="431"/>
         <location filename="mainwindow.cpp" line="469"/>
-        <location filename="mainwindow.cpp" line="848"/>
-        <location filename="mainwindow.cpp" line="1230"/>
-        <source>Vehicle</source>
-        <translation type="unfinished"></translation>
+        <source>Food and restaraunts</source>
+        <translation>Їжа та ресторани</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="432"/>
         <location filename="mainwindow.cpp" line="470"/>
-        <location filename="mainwindow.cpp" line="854"/>
-        <location filename="mainwindow.cpp" line="1236"/>
-        <source>Entertainment</source>
-        <translation type="unfinished"></translation>
+        <location filename="mainwindow.cpp" line="838"/>
+        <location filename="mainwindow.cpp" line="1221"/>
+        <source>Products</source>
+        <translation>Товари</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="433"/>
         <location filename="mainwindow.cpp" line="471"/>
-        <location filename="mainwindow.cpp" line="860"/>
-        <location filename="mainwindow.cpp" line="1242"/>
-        <source>Communication and internet</source>
-        <translation type="unfinished"></translation>
+        <location filename="mainwindow.cpp" line="844"/>
+        <location filename="mainwindow.cpp" line="1227"/>
+        <source>Healthcare</source>
+        <translation>Медичні послуги</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="434"/>
         <location filename="mainwindow.cpp" line="472"/>
-        <source>Financial expenses</source>
-        <translation type="unfinished"></translation>
+        <source>Public transport</source>
+        <translation>Громадський транспорт</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="435"/>
         <location filename="mainwindow.cpp" line="473"/>
+        <location filename="mainwindow.cpp" line="856"/>
+        <location filename="mainwindow.cpp" line="1239"/>
+        <source>Vehicle</source>
+        <translation>Транспортний засіб</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="436"/>
+        <location filename="mainwindow.cpp" line="474"/>
+        <location filename="mainwindow.cpp" line="862"/>
+        <location filename="mainwindow.cpp" line="1245"/>
+        <source>Entertainment</source>
+        <translation>Розваження</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="437"/>
+        <location filename="mainwindow.cpp" line="475"/>
+        <location filename="mainwindow.cpp" line="868"/>
+        <location filename="mainwindow.cpp" line="1251"/>
+        <source>Communication and internet</source>
+        <translation>Комунікація та інтернет</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="438"/>
+        <location filename="mainwindow.cpp" line="476"/>
+        <source>Financial expenses</source>
+        <translation>Фінансові витрати</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="439"/>
+        <location filename="mainwindow.cpp" line="477"/>
         <source>Financial transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Фінансові переводи</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="562"/>
+        <location filename="mainwindow.cpp" line="566"/>
         <source>Statistic</source>
-        <translation type="unfinished"></translation>
+        <translation>Статистика</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="565"/>
+        <location filename="mainwindow.cpp" line="569"/>
         <source>Rates</source>
-        <translation type="unfinished"></translation>
+        <translation>Валютні пари</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="628"/>
+        <location filename="mainwindow.cpp" line="632"/>
         <source>Create new Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити новий рахунок</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="775"/>
-        <location filename="mainwindow.cpp" line="1396"/>
+        <location filename="mainwindow.cpp" line="783"/>
+        <location filename="mainwindow.cpp" line="1405"/>
         <source>No operations yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Поки немає записів операцій</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="824"/>
-        <location filename="mainwindow.cpp" line="1206"/>
+        <location filename="mainwindow.cpp" line="832"/>
+        <location filename="mainwindow.cpp" line="1215"/>
         <source>Food</source>
-        <translation type="unfinished"></translation>
+        <translation>Їжа та ресторани</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="430"/>
-        <location filename="mainwindow.cpp" line="842"/>
-        <location filename="mainwindow.cpp" line="1224"/>
+        <location filename="mainwindow.cpp" line="434"/>
+        <location filename="mainwindow.cpp" line="850"/>
+        <location filename="mainwindow.cpp" line="1233"/>
         <source>Public Transport</source>
-        <translation type="unfinished"></translation>
+        <translation>Громадський транспорт</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="866"/>
-        <location filename="mainwindow.cpp" line="1248"/>
+        <location filename="mainwindow.cpp" line="714"/>
+        <source>Create new note</source>
+        <translation>Створити нову запис операції</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="715"/>
+        <source>Edit this account</source>
+        <translation>Редагування рахунку</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="874"/>
+        <location filename="mainwindow.cpp" line="1257"/>
         <source>Finance Expensies</source>
-        <translation type="unfinished"></translation>
+        <translation>Фінансові витрати</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="872"/>
-        <location filename="mainwindow.cpp" line="1254"/>
+        <location filename="mainwindow.cpp" line="880"/>
+        <location filename="mainwindow.cpp" line="1263"/>
         <source>Transfer operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Операції переводу</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="878"/>
-        <location filename="mainwindow.cpp" line="1260"/>
+        <location filename="mainwindow.cpp" line="886"/>
+        <location filename="mainwindow.cpp" line="1269"/>
         <source>Earnings</source>
-        <translation type="unfinished"></translation>
+        <translation>Дохід</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="971"/>
+        <location filename="mainwindow.cpp" line="980"/>
         <source>Connect to internet to get Rates data</source>
-        <translation type="unfinished"></translation>
+        <translation>Підключитеся до мережі для отримання даних об валютних парах</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1038"/>
+        <location filename="mainwindow.cpp" line="1047"/>
         <source>No operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Поки немає записів операцій</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1058"/>
+        <location filename="mainwindow.cpp" line="1067"/>
         <source>Food </source>
-        <translation type="unfinished"></translation>
+        <translation>Їжа та ресторани </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1065"/>
+        <location filename="mainwindow.cpp" line="1074"/>
         <source>Products </source>
-        <translation type="unfinished"></translation>
+        <translation>Товари </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1072"/>
+        <location filename="mainwindow.cpp" line="1081"/>
         <source>Healthcare </source>
-        <translation type="unfinished"></translation>
+        <translation>Медичні послуги </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1079"/>
+        <location filename="mainwindow.cpp" line="1088"/>
         <source>Public transport </source>
-        <translation type="unfinished"></translation>
+        <translation>Громадський транспорт </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1086"/>
+        <location filename="mainwindow.cpp" line="1095"/>
         <source>Vehicle </source>
-        <translation type="unfinished"></translation>
+        <translation>Транспортний засіб </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1093"/>
+        <location filename="mainwindow.cpp" line="1102"/>
         <source>Entertainment </source>
-        <translation type="unfinished"></translation>
+        <translation>Розваги </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1100"/>
+        <location filename="mainwindow.cpp" line="1109"/>
         <source>Communication and internet </source>
-        <translation type="unfinished"></translation>
+        <translation>Комунікація та інтернет </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1107"/>
+        <location filename="mainwindow.cpp" line="1116"/>
         <source>Finance Expensies </source>
-        <translation type="unfinished"></translation>
+        <translation>Фінансові витрати </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1114"/>
+        <location filename="mainwindow.cpp" line="1123"/>
         <source>Transfer </source>
-        <translation type="unfinished"></translation>
+        <translation>Переводи </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1342"/>
+        <location filename="mainwindow.cpp" line="1351"/>
         <source>Percentage</source>
-        <translation type="unfinished"></translation>
+        <translation>Відсотків</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>January</source>
-        <translation type="unfinished"></translation>
+        <translation>Січня</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>February</source>
-        <translation type="unfinished"></translation>
+        <translation>Лютого</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>March</source>
-        <translation type="unfinished"></translation>
+        <translation>Березня</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>April</source>
-        <translation type="unfinished"></translation>
+        <translation>Квітня</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>May</source>
-        <translation type="unfinished"></translation>
+        <translation>Травня</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>Juny</source>
-        <translation type="unfinished"></translation>
+        <translation>Червня</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1444"/>
+        <location filename="mainwindow.cpp" line="1453"/>
         <source>July</source>
-        <translation type="unfinished"></translation>
+        <translation>Липня</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1444"/>
+        <location filename="mainwindow.cpp" line="1453"/>
         <source>August</source>
-        <translation type="unfinished"></translation>
+        <translation>Серпня</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1444"/>
+        <location filename="mainwindow.cpp" line="1453"/>
         <source>September</source>
-        <translation type="unfinished"></translation>
+        <translation>Вересня</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1444"/>
+        <location filename="mainwindow.cpp" line="1453"/>
         <source>October</source>
-        <translation type="unfinished"></translation>
+        <translation>Жовтня</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1444"/>
+        <location filename="mainwindow.cpp" line="1453"/>
         <source>November</source>
-        <translation type="unfinished"></translation>
+        <translation>Листопада</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1479"/>
-        <source>Restart program</source>
-        <translation type="unfinished"></translation>
+        <location filename="mainwindow.cpp" line="1453"/>
+        <source>December</source>
+        <translation>Грудня</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1480"/>
-        <source>You must restart the application to apply the changes. Restart now?</source>
-        <translation type="unfinished"></translation>
+        <location filename="mainwindow.cpp" line="1488"/>
+        <source>Language changed</source>
+        <translation>Зміна мови</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1488"/>
+        <source>You must restart the application to apply the changes.</source>
+        <translation>Вам потрібно перезапустити програму для зміни поточної мови.</translation>
     </message>
 </context>
 </TS>
