@@ -46,7 +46,7 @@ Beta Version 1.0</source>
     </message>
     <message>
         <location filename="mainwindow.ui" line="478"/>
-        <location filename="mainwindow.cpp" line="556"/>
+        <location filename="mainwindow.cpp" line="560"/>
         <source>Main</source>
         <translation>Главная</translation>
     </message>
@@ -96,14 +96,14 @@ Beta Version 1.0</source>
     <message>
         <location filename="mainwindow.ui" line="1426"/>
         <location filename="mainwindow.ui" line="2267"/>
-        <location filename="mainwindow.cpp" line="1337"/>
+        <location filename="mainwindow.cpp" line="1346"/>
         <source>Category</source>
         <translation>Категории</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1528"/>
         <location filename="mainwindow.ui" line="2148"/>
-        <location filename="mainwindow.cpp" line="1347"/>
+        <location filename="mainwindow.cpp" line="1356"/>
         <source>Value</source>
         <translation>Значение</translation>
     </message>
@@ -186,7 +186,7 @@ Beta Version 1.0</source>
     </message>
     <message>
         <location filename="mainwindow.ui" line="3311"/>
-        <location filename="mainwindow.cpp" line="559"/>
+        <location filename="mainwindow.cpp" line="563"/>
         <source>Operations</source>
         <translation>Записи</translation>
     </message>
@@ -228,7 +228,7 @@ Beta Version 1.0</source>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4189"/>
-        <location filename="mainwindow.cpp" line="568"/>
+        <location filename="mainwindow.cpp" line="572"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -244,7 +244,7 @@ Beta Version 1.0</source>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4677"/>
-        <location filename="mainwindow.cpp" line="571"/>
+        <location filename="mainwindow.cpp" line="575"/>
         <source>Contacts</source>
         <translation>Контакты</translation>
     </message>
@@ -259,107 +259,107 @@ Beta Version 1.0</source>
         <translation> Поддержать</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="366"/>
+        <location filename="mainwindow.cpp" line="370"/>
         <source>No connection</source>
         <translation>Нет соединения</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="367"/>
+        <location filename="mainwindow.cpp" line="371"/>
         <source>No rates tables loaded. Connect to internet connection.</source>
         <oldsource>You cannot change currency while not connected your rates data from internet</oldsource>
         <translation>Таблица валютных пар не загружена. Проверьте подключение к интернету.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="422"/>
-        <location filename="mainwindow.cpp" line="462"/>
+        <location filename="mainwindow.cpp" line="426"/>
+        <location filename="mainwindow.cpp" line="466"/>
         <source>Outcome</source>
         <oldsource>Outome</oldsource>
         <translation>Расход</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="423"/>
-        <location filename="mainwindow.cpp" line="436"/>
-        <location filename="mainwindow.cpp" line="461"/>
-        <location filename="mainwindow.cpp" line="474"/>
+        <location filename="mainwindow.cpp" line="427"/>
+        <location filename="mainwindow.cpp" line="440"/>
+        <location filename="mainwindow.cpp" line="465"/>
+        <location filename="mainwindow.cpp" line="478"/>
         <source>Income</source>
         <translation>Доход</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="424"/>
-        <location filename="mainwindow.cpp" line="463"/>
+        <location filename="mainwindow.cpp" line="428"/>
+        <location filename="mainwindow.cpp" line="467"/>
         <source>Transfer</source>
         <translation>Перевод</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="427"/>
-        <location filename="mainwindow.cpp" line="465"/>
+        <location filename="mainwindow.cpp" line="431"/>
+        <location filename="mainwindow.cpp" line="469"/>
         <source>Food and restaraunts</source>
         <translation>Еда и рестораны</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="428"/>
-        <location filename="mainwindow.cpp" line="466"/>
-        <location filename="mainwindow.cpp" line="830"/>
-        <location filename="mainwindow.cpp" line="1212"/>
+        <location filename="mainwindow.cpp" line="432"/>
+        <location filename="mainwindow.cpp" line="470"/>
+        <location filename="mainwindow.cpp" line="838"/>
+        <location filename="mainwindow.cpp" line="1221"/>
         <source>Products</source>
         <translation>Товары</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="429"/>
-        <location filename="mainwindow.cpp" line="467"/>
-        <location filename="mainwindow.cpp" line="836"/>
-        <location filename="mainwindow.cpp" line="1218"/>
+        <location filename="mainwindow.cpp" line="433"/>
+        <location filename="mainwindow.cpp" line="471"/>
+        <location filename="mainwindow.cpp" line="844"/>
+        <location filename="mainwindow.cpp" line="1227"/>
         <source>Healthcare</source>
         <translation>Здравоохранение</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="468"/>
+        <location filename="mainwindow.cpp" line="472"/>
         <source>Public transport</source>
         <translation>Публиный транспорт</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="431"/>
-        <location filename="mainwindow.cpp" line="469"/>
-        <location filename="mainwindow.cpp" line="848"/>
-        <location filename="mainwindow.cpp" line="1230"/>
+        <location filename="mainwindow.cpp" line="435"/>
+        <location filename="mainwindow.cpp" line="473"/>
+        <location filename="mainwindow.cpp" line="856"/>
+        <location filename="mainwindow.cpp" line="1239"/>
         <source>Vehicle</source>
         <translation>Транспорт</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="432"/>
-        <location filename="mainwindow.cpp" line="470"/>
-        <location filename="mainwindow.cpp" line="854"/>
-        <location filename="mainwindow.cpp" line="1236"/>
+        <location filename="mainwindow.cpp" line="436"/>
+        <location filename="mainwindow.cpp" line="474"/>
+        <location filename="mainwindow.cpp" line="862"/>
+        <location filename="mainwindow.cpp" line="1245"/>
         <source>Entertainment</source>
         <translation>Развлечения</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="433"/>
-        <location filename="mainwindow.cpp" line="471"/>
-        <location filename="mainwindow.cpp" line="860"/>
-        <location filename="mainwindow.cpp" line="1242"/>
+        <location filename="mainwindow.cpp" line="437"/>
+        <location filename="mainwindow.cpp" line="475"/>
+        <location filename="mainwindow.cpp" line="868"/>
+        <location filename="mainwindow.cpp" line="1251"/>
         <source>Communication and internet</source>
         <translation>Интернет и связь</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="434"/>
-        <location filename="mainwindow.cpp" line="472"/>
+        <location filename="mainwindow.cpp" line="438"/>
+        <location filename="mainwindow.cpp" line="476"/>
         <source>Financial expenses</source>
         <translation>Финансовые расходы</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="435"/>
-        <location filename="mainwindow.cpp" line="473"/>
+        <location filename="mainwindow.cpp" line="439"/>
+        <location filename="mainwindow.cpp" line="477"/>
         <source>Financial transfer</source>
         <translation>Финансовый перевод</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="562"/>
+        <location filename="mainwindow.cpp" line="566"/>
         <source>Statistic</source>
         <translation>Статистика</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="565"/>
+        <location filename="mainwindow.cpp" line="569"/>
         <source>Rates</source>
         <translation>Курс валют</translation>
     </message>
@@ -368,26 +368,36 @@ Beta Version 1.0</source>
         <translation type="vanished">Поддержка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="628"/>
+        <location filename="mainwindow.cpp" line="632"/>
         <source>Create new Account</source>
         <translation>Создать новый счёт</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="775"/>
-        <location filename="mainwindow.cpp" line="1396"/>
+        <location filename="mainwindow.cpp" line="714"/>
+        <source>Create new note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="715"/>
+        <source>Edit this account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="783"/>
+        <location filename="mainwindow.cpp" line="1405"/>
         <source>No operations yet</source>
         <translation>Отсутствуют операции</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="824"/>
-        <location filename="mainwindow.cpp" line="1206"/>
+        <location filename="mainwindow.cpp" line="832"/>
+        <location filename="mainwindow.cpp" line="1215"/>
         <source>Food</source>
         <translation>Еда и рестораны</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="430"/>
-        <location filename="mainwindow.cpp" line="842"/>
-        <location filename="mainwindow.cpp" line="1224"/>
+        <location filename="mainwindow.cpp" line="434"/>
+        <location filename="mainwindow.cpp" line="850"/>
+        <location filename="mainwindow.cpp" line="1233"/>
         <source>Public Transport</source>
         <translation>Публиный транспорт</translation>
     </message>
@@ -396,147 +406,160 @@ Beta Version 1.0</source>
         <translation type="obsolete">Связь и интернет</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="866"/>
-        <location filename="mainwindow.cpp" line="1248"/>
+        <location filename="mainwindow.cpp" line="874"/>
+        <location filename="mainwindow.cpp" line="1257"/>
         <source>Finance Expensies</source>
         <translation>Финансовые расходы</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="872"/>
-        <location filename="mainwindow.cpp" line="1254"/>
+        <location filename="mainwindow.cpp" line="880"/>
+        <location filename="mainwindow.cpp" line="1263"/>
         <source>Transfer operation</source>
         <translation>Финансовый перевод</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="878"/>
-        <location filename="mainwindow.cpp" line="1260"/>
+        <location filename="mainwindow.cpp" line="886"/>
+        <location filename="mainwindow.cpp" line="1269"/>
         <source>Earnings</source>
         <translation>Доход</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="971"/>
+        <location filename="mainwindow.cpp" line="980"/>
         <source>Connect to internet to get Rates data</source>
         <translation>Проверьте подключение к интернету чтобы получить данные валютных пар</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1038"/>
+        <location filename="mainwindow.cpp" line="1047"/>
         <source>No operations</source>
         <translation>Отсутствуют операции</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1058"/>
+        <location filename="mainwindow.cpp" line="1067"/>
         <source>Food </source>
         <translation>Еда </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1065"/>
+        <location filename="mainwindow.cpp" line="1074"/>
         <source>Products </source>
         <translation>Товары </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1072"/>
+        <location filename="mainwindow.cpp" line="1081"/>
         <source>Healthcare </source>
         <translation>Здравоохранение </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1079"/>
+        <location filename="mainwindow.cpp" line="1088"/>
         <source>Public transport </source>
         <translation>Публиный транспорт </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1086"/>
+        <location filename="mainwindow.cpp" line="1095"/>
         <source>Vehicle </source>
         <translation>Транспорт </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1093"/>
+        <location filename="mainwindow.cpp" line="1102"/>
         <source>Entertainment </source>
         <translation>Развлечения </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1100"/>
+        <location filename="mainwindow.cpp" line="1109"/>
         <source>Communication and internet </source>
         <translation>Связь и интернет </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1107"/>
+        <location filename="mainwindow.cpp" line="1116"/>
         <source>Finance Expensies </source>
         <translation>Финансовые расходы </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1114"/>
+        <location filename="mainwindow.cpp" line="1123"/>
         <source>Transfer </source>
         <translation>Перевод </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1342"/>
+        <location filename="mainwindow.cpp" line="1351"/>
         <source>Percentage</source>
         <translation>Процент</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>January</source>
         <translation>Января</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>February</source>
         <translation>Февраля</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>March</source>
         <translation>Марта</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>April</source>
         <translation>Апреля</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>May</source>
         <translation>Мая</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1452"/>
         <source>Juny</source>
         <translation>Июня</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1444"/>
+        <location filename="mainwindow.cpp" line="1453"/>
         <source>July</source>
         <translation>Июля</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1444"/>
+        <location filename="mainwindow.cpp" line="1453"/>
         <source>August</source>
         <translation>Августа</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1444"/>
+        <location filename="mainwindow.cpp" line="1453"/>
         <source>September</source>
         <translation>Сентября</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1444"/>
+        <location filename="mainwindow.cpp" line="1453"/>
         <source>October</source>
         <translation>Октября</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1444"/>
+        <location filename="mainwindow.cpp" line="1453"/>
         <source>November</source>
         <translation>Ноября</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1479"/>
-        <source>Restart program</source>
-        <translation>Перезапуск программы</translation>
+        <location filename="mainwindow.cpp" line="1453"/>
+        <source>December</source>
+        <translation>Декабря</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1480"/>
+        <location filename="mainwindow.cpp" line="1488"/>
+        <source>Language changed</source>
+        <translation>Изменение языка</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1488"/>
+        <source>You must restart the application to apply the changes.</source>
+        <translation>Вам следует перезапустить программы для применение изменений.</translation>
+    </message>
+    <message>
+        <source>Restart program</source>
+        <translation type="vanished">Перезапуск программы</translation>
+    </message>
+    <message>
         <source>You must restart the application to apply the changes. Restart now?</source>
-        <translation>Вы должны перезапустить программу чтобы принять изменения. Сделать это сейчас?</translation>
+        <translation type="vanished">Вы должны перезапустить программу чтобы принять изменения. Сделать это сейчас?</translation>
     </message>
 </context>
 </TS>
