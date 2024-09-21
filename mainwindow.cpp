@@ -714,8 +714,8 @@ void MainWindow::addAccountCard(std::string AccName, double Count, std::string C
     addButton->setStyleSheet("QPushButton{border: 3px solid #112D9F;background-color:#1F2021;border-radius:15px;} QPushButton:hover{background-color:#112D9F;border-radius:15px;}");
     editButton->setStyleSheet("QPushButton{border: 3px solid #112D9F;background-color:#1F2021;border-radius:15px;} QPushButton:hover{background-color:#112D9F;border-radius:15px;}");
 
-    addButton->setToolTip(tr("Create new note"));
-    editButton->setToolTip(tr("Edit this account"));
+    addButton->setToolTip("<html><head/><body><p><span style=\" font-size:12pt; color:#ffffff;\">" + tr("Create a new note") + "</span></p></body></html>");
+    editButton->setToolTip("<html><head/><body><p><span style=\" font-size:12pt; color:#ffffff;\">" + tr("Edit this account") + "</span></p></body></html>");
 
     QGraphicsOpacityEffect *effect_add = new QGraphicsOpacityEffect();
     QGraphicsOpacityEffect *effect_edit = new QGraphicsOpacityEffect();

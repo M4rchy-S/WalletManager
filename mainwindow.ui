@@ -1052,7 +1052,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: #1F2021;
-font: 600 16pt &quot;Segoe UI&quot;;</string>
+font: 600 16pt &quot;Segoe UI&quot;;
+color:#ECEBDF;
+</string>
                   </property>
                   <property name="text">
                    <string>Create Note</string>
@@ -1730,7 +1732,9 @@ border-radius:15px;
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: #1F2021;
-font: 600 16pt &quot;Segoe UI&quot;;</string>
+font: 600 16pt &quot;Segoe UI&quot;;
+color:#ECEBDF;
+</string>
                   </property>
                   <property name="text">
                    <string>Create Account</string>
@@ -1794,7 +1798,9 @@ background-color: #1F2021;</string>
                      </property>
                      <property name="styleSheet">
                       <string notr="true">border: 1.5px solid white;
-border-radius:4px;</string>
+border-radius:4px;
+font: 600 13pt &quot;Segoe UI&quot;;
+color:#ECEBDF;</string>
                      </property>
                      <property name="text">
                       <string>0</string>
@@ -1932,7 +1938,9 @@ QPushButton:pressed{
                      </property>
                      <property name="styleSheet">
                       <string notr="true">border: 1.5px solid white;
-border-radius:4px;</string>
+border-radius:4px;
+font: 600 13pt &quot;Segoe UI&quot;;
+color:#ECEBDF;</string>
                      </property>
                      <property name="maxLength">
                       <number>25</number>
@@ -1962,6 +1970,8 @@ border-radius:4px;</string>
     border-radius: 4px;
     padding: 1px 18px 1px 3px;
     min-width: 6em;
+	font: 600 13pt &quot;Segoe UI&quot;;
+	color:#ECEBDF;
 }
 QComboBox QAbstractItemView {
     border: 1.5px solid white;
@@ -2111,7 +2121,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: #1F2021;
-font: 600 16pt &quot;Segoe UI&quot;;</string>
+font: 600 16pt &quot;Segoe UI&quot;;
+color:#ECEBDF;
+</string>
                   </property>
                   <property name="text">
                    <string>Edit Note</string>
@@ -2160,6 +2172,8 @@ background-color: #1F2021;</string>
     border-radius: 4px;
     padding: 1px 18px 1px 3px;
     min-width: 6em;
+font: 600 13pt &quot;Segoe UI&quot;;
+color:#ECEBDF;
 }
 QComboBox QAbstractItemView {
     border: 1.5px solid white;
@@ -2330,6 +2344,8 @@ border-radius:4px;</string>
     border: 1.5px solid white;
     border-radius: 4px;
     padding: 1px 18px 1px 3px;
+font: 600 13pt &quot;Segoe UI&quot;;
+color:#ECEBDF;
 }
 QComboBox QAbstractItemView {
     border: 1.5px solid white;
@@ -2442,6 +2458,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
     border: 1.5px solid white;
     border-radius: 4px;
     padding: 1px 18px 1px 3px;
+font: 600 13pt &quot;Segoe UI&quot;;
+color:#ECEBDF;
 }
 QComboBox QAbstractItemView {
     border: 1.5px solid white;
@@ -2657,6 +2675,8 @@ QPushButton:pressed{
     border: 1.5px solid white;
     border-radius: 4px;
     padding: 1px 18px 1px 3px;
+font: 600 13pt &quot;Segoe UI&quot;;
+color:#ECEBDF;
 }
 QComboBox QAbstractItemView {
     border: 1.5px solid white;
@@ -2821,7 +2841,9 @@ border-radius:4px;</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: #1F2021;
-	font: 600 16pt &quot;Segoe UI&quot;;</string>
+	font: 600 16pt &quot;Segoe UI&quot;;
+color:#ECEBDF;
+</string>
                   </property>
                   <property name="text">
                    <string>Edit Account</string>
@@ -2872,6 +2894,8 @@ background-color: #1F2021;</string>
     border: 1.5px solid white;
     border-radius: 4px;
     padding: 1px 18px 1px 3px;
+font: 600 13pt &quot;Segoe UI&quot;;
+color:#ECEBDF;
 }
 QComboBox QAbstractItemView {
     border: 1.5px solid white;
@@ -3131,6 +3155,8 @@ border-radius:4px;</string>
     border: 1.5px solid white;
     border-radius: 4px;
     padding: 1px 18px 1px 3px;
+font: 600 13pt &quot;Segoe UI&quot;;
+color:#ECEBDF;
 }
 QComboBox QAbstractItemView {
     border: 1.5px solid white;
@@ -3394,8 +3420,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>532</width>
-                  <height>394</height>
+                  <width>600</width>
+                  <height>718</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_22" columnminimumwidth="0">
@@ -3512,7 +3538,7 @@ color:#ECEBDF;
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">font: 600 14pt &quot;Noto Sans KR&quot;;
+                <string notr="true">font: 600 14pt &quot;Segoe UI&quot;;
 color:#CCCCCC;
 </string>
                </property>
@@ -3607,8 +3633,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>68</width>
-                  <height>18</height>
+                  <width>782</width>
+                  <height>702</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_20"/>
@@ -3789,7 +3815,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                   <x>0</x>
                   <y>0</y>
                   <width>500</width>
-                  <height>526</height>
+                  <height>560</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_13">
@@ -4272,8 +4298,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>318</width>
-                  <height>324</height>
+                  <width>382</width>
+                  <height>376</height>
                  </rect>
                 </property>
                 <property name="styleSheet">
@@ -4345,8 +4371,8 @@ color:#ECEBDF;
     border: 1.5px solid white;
     border-radius: 4px;
     padding: 1px 18px 1px 3px;
-	font: 600 12pt &quot;Noto Sans KR&quot;;
-	color:#ECEBDF;
+font: 600 13pt &quot;Segoe UI&quot;;
+color:#ECEBDF;
 }
 QComboBox QAbstractItemView {
     border: 1.5px solid white;
@@ -4459,7 +4485,7 @@ color:#ECEBDF;
     border: 1.5px solid white;
     border-radius: 4px;
     padding: 1px 18px 1px 3px;
-	font: 600 12pt &quot;Noto Sans KR&quot;;
+	font: 600 13pt &quot;Segoe UI&quot;;
 	color:#ECEBDF;
 }
 QComboBox QAbstractItemView {
