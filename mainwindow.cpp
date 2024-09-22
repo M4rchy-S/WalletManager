@@ -345,7 +345,7 @@ void MainWindow::EditNote()
     else if(operation_type == 1)
         operation_type = 0;
 
-    std::cout <<  ui->categoryComboBox_edit->currentIndex() << std::endl;
+    //std::cout <<  ui->categoryComboBox_edit->currentIndex() << std::endl;
 
     this->wallet->Edit_Note(this->ID, static_cast<wlt::Operation>( operation_type ), static_cast<wlt::Category>( ui->categoryComboBox_edit->currentIndex() ),
                       ui->accountMainComboBox_edit->currentText().toStdString(), Value, details_str.toStdString() );
