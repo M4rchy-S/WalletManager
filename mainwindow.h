@@ -21,6 +21,8 @@
 
 #include <vector>
 
+#include <iostream>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

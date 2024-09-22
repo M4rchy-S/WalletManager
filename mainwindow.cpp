@@ -294,7 +294,7 @@ void MainWindow::CreateNote()
         operation_type = 0;
 
     //  Usual operation
-    wallet->Create_Note( static_cast<wlt::Operation>( operation_type ), static_cast<wlt::Category>( ui->categoryComboBox->currentIndex() ),
+    this->wallet->Create_Note( static_cast<wlt::Operation>( operation_type ), static_cast<wlt::Category>( ui->categoryComboBox->currentIndex() ),
                         ui->accountMainComboBox->currentText().toStdString(), Value, details_str.toStdString());
 
     ui->mainWindow->setCurrentIndex(this->last_index);
@@ -334,7 +334,7 @@ void MainWindow::EditNote()
 
     if(operation_type == 2)
     {
-        wallet->Edit_Note(this->ID, static_cast<wlt::Operation>( ui->OperationComboBox_edit->currentIndex() ), static_cast<wlt::Category>( ui->categoryComboBox_edit->currentIndex() ),
+        this->wallet->Edit_Note(this->ID, static_cast<wlt::Operation>( ui->OperationComboBox_edit->currentIndex() ), static_cast<wlt::Category>( ui->categoryComboBox_edit->currentIndex() ),
                           ui->accountMainComboBox_edit->currentText().toStdString(), ui->accountAdditComboBox_edit->currentText().toStdString() ,Value, details_str.toStdString());
         ui->mainWindow->setCurrentIndex(0);
         return;
@@ -345,7 +345,9 @@ void MainWindow::EditNote()
     else if(operation_type == 1)
         operation_type = 0;
 
-    wallet->Edit_Note(this->ID, static_cast<wlt::Operation>( operation_type ), static_cast<wlt::Category>( ui->categoryComboBox_edit->currentIndex() ),
+    std::cout <<  ui->categoryComboBox_edit->currentIndex() << std::endl;
+
+    this->wallet->Edit_Note(this->ID, static_cast<wlt::Operation>( operation_type ), static_cast<wlt::Category>( ui->categoryComboBox_edit->currentIndex() ),
                       ui->accountMainComboBox_edit->currentText().toStdString(), Value, details_str.toStdString() );
 
     ui->mainWindow->setCurrentIndex(this->last_index);
@@ -462,8 +464,8 @@ void MainWindow::formsInit()
     QObject::connect(ui->accountMainComboBox, &QComboBox::currentTextChanged, this, &MainWindow::AccountComboBoxChangedInAddNoteForm);
 
     //  Edit Note Form
-    ui->OperationComboBox_edit->addItem(  tr("Income")  );
     ui->OperationComboBox_edit->addItem(  tr("Outcome")  );
+    ui->OperationComboBox_edit->addItem(  tr("Income")  );
     ui->OperationComboBox_edit->addItem(  tr("Transfer")  );
 
     ui->categoryComboBox_edit->addItem(tr("Food and restaraunts"));
@@ -863,8 +865,9 @@ QWidget *MainWindow::addNoteCard(wlt::Operation operation, std::string category,
             iconImage = this->getWhiteIcon(":/icons/smile.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #CC8B00;}");
             categoryString = tr("Entertainment");
+
         }
-        else if(categoryString == "Communication and internet")
+        else if(categoryString == "Network")
         {
             iconImage = this->getWhiteIcon(":/icons/wifi.svg");
             iconBG->setStyleSheet("QWidget{border-radius: 30px; background-color: #0B3CFF;}");
@@ -919,7 +922,11 @@ QWidget *MainWindow::addNoteCard(wlt::Operation operation, std::string category,
     categoryLabel->setText( categoryString );
     accountNameLabel->setText( acc_name_correct );
 
-    categoryLabel->setStyleSheet("QLabel{font: 600 14pt \"Segoe UI\";color:#ECEBDF;}");
+    if(categoryLabel->text().size() >= 15)
+        categoryLabel->setStyleSheet("QLabel{font: 600 13pt \"Segoe UI\";color:#ECEBDF;}");
+    else
+        categoryLabel->setStyleSheet("QLabel{font: 600 14pt \"Segoe UI\";color:#ECEBDF;}");
+
     accountNameLabel->setStyleSheet("QLabel{font: 600 14pt \"Segoe UI\";color:#ECEBDF;}");
 
     centerDataLayout->addWidget(categoryLabel);
