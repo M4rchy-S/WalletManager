@@ -1066,7 +1066,7 @@ std::string  wlt::eWallet::http_request_GET()
 
 
     std::string url = "http://data.fixer.io";
-    std::string access_key = "2e9d372d0563e0d1a409f40f72917696";
+    std::string access_key = "${{secrets.DATAFIXER_API}}";
     //std::string base = "EUR";   //  EDIT!!!
     std::string base = this->Currency_Type;
     std::string args = "/api/latest?access_key=" + access_key + "&base=" + base;
