@@ -525,7 +525,8 @@ void MainWindow::settingsFormInit()
     else if(db_lang == "ua")
         ui->languageComboBox->setCurrentText("Українська");
 
-    QObject::connect(ui->languageComboBox, &QComboBox::currentIndexChanged, this, this->ChangeTranslation);
+    // QObject::connect(ui->languageComboBox, &QComboBox::currentIndexChanged, this, this->ChangeTranslation);
+    QObject::connect(ui->languageComboBox, &QComboBox::currentIndexChanged, this, &MainWindow::ChangeTranslation);
 
     ui->LangIcon->setPixmap(this->getWhiteIcon(":/setting-icons/icons/language-solid.svg"));
 }
@@ -539,6 +540,10 @@ void MainWindow::contactFormInit()
     ui->DonateButton->setIcon(this->getWhiteIcon(":/setting-icons/icons/circle-dollar-to-slot-solid.svg"));
     ui->DonateButton->setIconSize(QSize(23,22));
     ui->DonateButton->setCursor(Qt::PointingHandCursor);
+
+    // Disable donation button
+    ui->DonateButton->setDisabled(true);
+    ui->DonateButton->setVisible(false);
 
     //  Url connects
     QObject::connect(ui->BugReportButton, &QPushButton::clicked, this,

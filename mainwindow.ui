@@ -3420,8 +3420,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>532</width>
-                  <height>394</height>
+                  <width>600</width>
+                  <height>718</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_22" columnminimumwidth="0">
@@ -3633,8 +3633,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>68</width>
-                  <height>18</height>
+                  <width>782</width>
+                  <height>702</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_20"/>
@@ -3815,7 +3815,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                   <x>0</x>
                   <y>0</y>
                   <width>500</width>
-                  <height>526</height>
+                  <height>560</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_13">
@@ -4298,8 +4298,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>318</width>
-                  <height>324</height>
+                  <width>382</width>
+                  <height>376</height>
                  </rect>
                 </property>
                 <property name="styleSheet">
@@ -4706,6 +4706,9 @@ color:#ECEBDF;
                <layout class="QGridLayout" name="gridLayout_27">
                 <item row="1" column="0">
                  <widget class="QPushButton" name="DonateButton">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
                   <property name="minimumSize">
                    <size>
                     <width>250</width>
