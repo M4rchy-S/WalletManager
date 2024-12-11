@@ -24,6 +24,9 @@
 #include <sqlite3.h>
 #include <nlohmann/json.hpp>
 
+// #include <QDebug>
+#include <regex>
+
 
 namespace wlt {
 
@@ -47,7 +50,7 @@ namespace wlt {
 
         //int request_GET_Rates();
         int fillRatesTables();
-        std::string  http_request_GET();
+        //std::string  http_request_GET();
 		unsigned short getMonth();
 		
 

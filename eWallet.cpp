@@ -64,6 +64,7 @@ wlt::eWallet::eWallet()
         this->fillRatesTables();
         //      Delete BTC from Rates
         this->deleteRate("BTC");
+        this->deleteRate("eur");
 	}
 	else
 	{
@@ -72,16 +73,18 @@ wlt::eWallet::eWallet()
 
         this->resetProgramDataFromDB();
         this->deleteRate("BTC");
+        this->deleteRate("eur");
 		//		Get Rates from API
+        this->fillRatesTables();
 
         //if (this->LocalMonth != this->getMonth() || this->Rates.size() == 0) !!!!!!!!!!!!!!!!!!!!!
-        if (this->LocalMonth != this->getMonth() || this->Rates["EUR"] == 0.00)
-		{
-			this->LocalMonth = this->getMonth();
-			this->SQLRequest("UPDATE Settings SET Month = " + std::to_string(this->LocalMonth), this->callback);
-            this->fillRatesTables();
+  //       if (this->LocalMonth != this->getMonth() || this->Rates["EUR"] == 0.00)
+        // {
+        // 	this->LocalMonth = this->getMonth();
+        // 	this->SQLRequest("UPDATE Settings SET Month = " + std::to_string(this->LocalMonth), this->callback);
+  //           this->fillRatesTables();
 
-		}
+        // }
 	}
 	
 }
@@ -1054,245 +1057,93 @@ unsigned short wlt::eWallet::getMonth()
 
 }
 
-std::string  wlt::eWallet::http_request_GET()
-{
-    //      HTTP API Request
-    QEventLoop eventLoop;
+// std::string  wlt::eWallet::http_request_GET()
+// {
+//     //      HTTP API Request
+//     QEventLoop eventLoop;
 
+
+//     QNetworkAccessManager mgr;
+
+//     QObject::connect(&mgr, SIGNAL(finished(QNetworkReply*)),
+//                      &eventLoop, SLOT(quit()));
+
+
+//     std::string url = "https://tradingeconomics.com/currencies?base=";
+//     // std::string access_key = "${{secrets.DATAFIXER_API}}";
+//     //std::string base = "EUR";   //  EDIT!!!
+//     std::string base = this->Currency_Type;
+//     std::string args = url + base;
+
+//     QNetworkRequest req( QUrl(QString::fromStdString(args)) );
+
+//     QNetworkReply *reply = mgr.get(req);
+//     eventLoop.exec();
+
+//     if(reply->error() == QNetworkReply::NoError)
+//     {
+//         //qDebug() << "Success" << reply->readAll().toStdString() ;
+//         std::string ret = reply->readAll().toStdString();
+//         delete reply;
+//         return ret;
+//     }
+//     else{
+//         //qDebug() << "Failure" << reply->errorString().toStdString();
+//         std::string ret = "";
+//         delete reply;
+//         return ret;
+//     }
+// }
+
+int wlt::eWallet::fillRatesTables()
+{
+    //std::string json_string = this->http_request_GET();
+
+    QEventLoop eventLoop;
 
     QNetworkAccessManager mgr;
     QObject::connect(&mgr, SIGNAL(finished(QNetworkReply*)),
                      &eventLoop, SLOT(quit()));
 
-
-    std::string url = "http://data.fixer.io";
-    std::string access_key = "${{secrets.DATAFIXER_API}}";
-    //std::string base = "EUR";   //  EDIT!!!
+    std::string url = "https://tradingeconomics.com/currencies?base=";
     std::string base = this->Currency_Type;
-    std::string args = "/api/latest?access_key=" + access_key + "&base=" + base;
+    std::string args = url + base;
+    QNetworkRequest req( QUrl(QString::fromStdString(args)) );
 
-    QNetworkRequest req( QUrl(QString::fromStdString(url + args)) );
     QNetworkReply *reply = mgr.get(req);
     eventLoop.exec();
 
     if(reply->error() == QNetworkReply::NoError)
     {
-        //qDebug() << "Success" << reply->readAll().toStdString() ;
+        //qDebug() << "Success";
         std::string ret = reply->readAll().toStdString();
         delete reply;
-        return ret;
-    }
-    else{
-        //qDebug() << "Failure" << reply->errorString().toStdString();
-        std::string ret = "";
-        delete reply;
-        return ret;
-    }
-}
+        this->isRateValidData = true;
 
-int wlt::eWallet::fillRatesTables()
-{
-    std::string json_string = this->http_request_GET();
-    try{
-        nlohmann::json data = nlohmann::json::parse(json_string);
+        this->Rates.clear();
+        this->SQLRequest("DELETE FROM Rates", this->callback);
 
-        if (data["success"].dump() == "true") {
+        std::smatch match;
+        std::regex reg(base + "(\\w\\w\\w)\\D*(\\d+.\\d+)\\s");
 
-            nlohmann::json rates = data["rates"];
-            this->Rates.clear();
-            this->SQLRequest("DELETE FROM Rates", this->callback);
-
-
-            for (auto it = rates.begin(); it != rates.end(); it++)
-            {
-                //std::cout << it.key() << ": " << it.value() << std::endl;
-                this->addRate(it.key(), (double)it.value());
-                //std::string sql = "INSERT INTO Rates VALUES('" + it.key() + "', " + std::to_string((double)it.value()) + ")";
-                this->SQLRequest("INSERT INTO Rates VALUES('" + it.key() + "', " + std::to_string((double)it.value()) + ")", this->callback);
-            }
-            return 1;
+        // Поиск совпадений
+        std::string::const_iterator searchStart(ret.cbegin());
+        while (regex_search(searchStart, ret.cend(), match, reg)) {
+            // Выводим найденные значения
+            // std::cout << "Match 1: " << match[1].str() << ", Match 2: " << match[2].str() << std::endl;
+            //qDebug() << "Match 1: " << match[1].str() << ", Match 2: " << std::stod(  match[2].str() );
+            this->addRate(match[1].str(), std::stod(  match[2].str() ));
+            this->SQLRequest("INSERT INTO Rates VALUES('" + match[1].str() + "', " + match[2].str() + ")", this->callback);
+            // Смещаем итератор, чтобы искать дальше
+            searchStart = match.suffix().first;
         }
-        else
-        {
-            std::list<std::string> currencies = {
-                "AED", // United Arab Emirates Dirham
-                "AFN", // Afghan Afghani
-                "ALL", // Albanian Lek
-                "AMD", // Armenian Dram
-                "ANG", // Netherlands Antillean Guilder
-                "AOA", // Angolan Kwanza
-                "ARS", // Argentine Peso
-                "AUD", // Australian Dollar
-                "AWG", // Aruban Florin
-                "AZN", // Azerbaijani Manat
-                "BAM", // Bosnia and Herzegovina Convertible Mark
-                "BBD", // Barbadian Dollar
-                "BDT", // Bangladeshi Taka
-                "BGN", // Bulgarian Lev
-                "BHD", // Bahraini Dinar
-                "BIF", // Burundian Franc
-                "BMD", // Bermudian Dollar
-                "BND", // Brunei Dollar
-                "BOB", // Bolivian Boliviano
-                "BRL", // Brazilian Real
-                "BSD", // Bahamian Dollar
-                "BTN", // Bhutanese Ngultrum
-                "BWP", // Botswanan Pula
-                "BYN", // Belarusian Ruble
-                "BZD", // Belize Dollar
-                "CAD", // Canadian Dollar
-                "CDF", // Congolese Franc
-                "CHF", // Swiss Franc
-                "CLP", // Chilean Peso
-                "CNY", // Chinese Yuan
-                "COP", // Colombian Peso
-                "CRC", // Costa Rican Colón
-                "CUC", // Cuban Convertible Peso
-                "CUP", // Cuban Peso
-                "CVE", // Cape Verdean Escudo
-                "CZK", // Czech Koruna
-                "DJF", // Djiboutian Franc
-                "DKK", // Danish Krone
-                "DOP", // Dominican Peso
-                "DZD", // Algerian Dinar
-                "EGP", // Egyptian Pound
-                "ERN", // Eritrean Nakfa
-                "ETB", // Ethiopian Birr
-                "EUR", // Euro
-                "FJD", // Fijian Dollar
-                "FKP", // Falkland Islands Pound
-                "FOK", // Faroese Króna
-                "GBP", // British Pound Sterling
-                "GEL", // Georgian Lari
-                "GHS", // Ghanaian Cedi
-                "GIP", // Gibraltar Pound
-                "GMD", // Gambian Dalasi
-                "GNF", // Guinean Franc
-                "GTQ", // Guatemalan Quetzal
-                "GYD", // Guyanaese Dollar
-                "HKD", // Hong Kong Dollar
-                "HNL", // Honduran Lempira
-                "HRK", // Croatian Kuna
-                "HTG", // Haitian Gourde
-                "HUF", // Hungarian Forint
-                "IDR", // Indonesian Rupiah
-                "ILS", // Israeli New Shekel
-                "INR", // Indian Rupee
-                "IQD", // Iraqi Dinar
-                "IRR", // Iranian Rial
-                "ISK", // Icelandic Króna
-                "JMD", // Jamaican Dollar
-                "JOD", // Jordanian Dinar
-                "JPY", // Japanese Yen
-                "KES", // Kenyan Shilling
-                "KGS", // Kyrgystani Som
-                "KHR", // Cambodian Riel
-                "KID", // Kiribati Dollar
-                "KMF", // Comorian Franc
-                "KRW", // South Korean Won
-                "KWD", // Kuwaiti Dinar
-                "KYD", // Cayman Islands Dollar
-                "KZT", // Kazakhstani Tenge
-                "LAK", // Laotian Kip
-                "LBP", // Lebanese Pound
-                "LKR", // Sri Lankan Rupee
-                "LRD", // Liberian Dollar
-                "LSL", // Lesotho Loti
-                "LYD", // Libyan Dinar
-                "MAD", // Moroccan Dirham
-                "MDL", // Moldovan Leu
-                "MGA", // Malagasy Ariary
-                "MKD", // Macedonian Denar
-                "MMK", // Myanma Kyat
-                "MNT", // Mongolian Tugrik
-                "MOP", // Macanese Pataca
-                "MRO", // Mauritanian Ouguiya
-                "MUR", // Mauritian Rupee
-                "MVR", // Maldivian Rufiyaa
-                "MWK", // Malawian Kwacha
-                "MXN", // Mexican Peso
-                "MYR", // Malaysian Ringgit
-                "MZN", // Mozambican Metical
-                "NAD", // Namibian Dollar
-                "NGN", // Nigerian Naira
-                "NIO", // Nicaraguan Córdoba
-                "NOK", // Norwegian Krone
-                "NPR", // Nepalese Rupee
-                "NZD", // New Zealand Dollar
-                "OMR", // Omani Rial
-                "PAB", // Panamanian Balboa
-                "PEN", // Peruvian Nuevo Sol
-                "PGK", // Papua New Guinean Kina
-                "PHP", // Philippine Peso
-                "PKR", // Pakistani Rupee
-                "PLN", // Polish Zloty
-                "PYG", // Paraguayan Guarani
-                "QAR", // Qatari Rial
-                "RON", // Romanian Leu
-                "RSD", // Serbian Dinar
-                "RUB", // Russian Ruble
-                "RWF", // Rwandan Franc
-                "SAR", // Saudi Riyal
-                "SBD", // Solomon Islands Dollar
-                "SCR", // Seychellois Rupee
-                "SDG", // Sudanese Pound
-                "SEK", // Swedish Krona
-                "SGD", // Singapore Dollar
-                "SHP", // Saint Helena Pound
-                "SLL", // Sierra Leonean Leone
-                "SOS", // Somali Shilling
-                "SRD", // Surinamese Dollar
-                "SSP", // South Sudanese Pound
-                "STN", // São Tomé and Príncipe Dobra
-                "SYP", // Syrian Pound
-                "SZL", // Swazi Lilangeni
-                "THB", // Thai Baht
-                "TJS", // Tajikistani Somoni
-                "TMT", // Turkmenistani Manat
-                "TND", // Tunisian Dinar
-                "TOP", // Tongan Paʻanga
-                "TRY", // Turkish Lira
-                "TTD", // Trinidad and Tobago Dollar
-                "TVD", // Tuvaluan Dollar
-                "TWD", // New Taiwan Dollar
-                "TZS", // Tanzanian Shilling
-                "UAH", // Ukrainian Hryvnia
-                "UGX", // Ugandan Shilling
-                "USD", // United States Dollar
-                "UYU", // Uruguayan Peso
-                "UZS", // Uzbekistani Som
-                "VES", // Venezuelan Bolívar Soberano
-                "VND", // Vietnamese Dong
-                "VUV", // Vanuatu Vatu
-                "WST", // Samoan Tala
-                "XAF", // Central African CFA Franc
-                "XAG", // Silver Ounce
-                "XAU", // Gold Ounce
-                "XCD", // East Caribbean Dollar
-                "XDR", // International Monetary Fund (IMF) Special Drawing Rights
-                "XOF", // West African CFA Franc
-                "XPF", // CFP Franc
-                "YER", // Yemeni Rial
-                "ZAR", // South African Rand
-                "ZMK", // Zambian Kwacha (before 2013)
-                "ZMW", // Zambian Kwacha (since 2013)
-                "ZWL"  // Zimbabwean Dollar
-            };
-            this->Rates.clear();
-            this->Currency_Type = "EUR";
-
-            for(auto iter = currencies.begin(); iter != currencies.end(); iter++)
-            {
-                this->addRate(*iter, 0);
-                this->SQLRequest("INSERT INTO Rates VALUES('" + *iter + "', " + std::to_string(0.0) + ")", this->callback);
-            }
-            this->isRateValidData = false;
-            return -1;
-        }
-
+        return 1;
     }
-    catch (const nlohmann::json::exception& e)
+    else
     {
+        //qDebug() << "Failure";
+        delete reply;
+
         std::list<std::string> currencies = {
             "AED", // United Arab Emirates Dirham
             "AFN", // Afghan Afghani
@@ -1468,6 +1319,378 @@ int wlt::eWallet::fillRatesTables()
         this->isRateValidData = false;
         return -1;
     }
+
+    // try{
+
+    //     this->Rates.clear();
+    //     this->SQLRequest("DELETE FROM Rates", this->callback);
+
+
+    //         for (auto it = rates.begin(); it != rates.end(); it++)
+    //         {
+
+    //             this->addRate(it.key(), (double)it.value());
+
+    //             this->SQLRequest("INSERT INTO Rates VALUES('" + it.key() + "', " + std::to_string((double)it.value()) + ")", this->callback);
+    //         }
+    //         return 1;
+    //     }
+    //     else
+    //     {
+    //         std::list<std::string> currencies = {
+    //             "AED", // United Arab Emirates Dirham
+    //             "AFN", // Afghan Afghani
+    //             "ALL", // Albanian Lek
+    //             "AMD", // Armenian Dram
+    //             "ANG", // Netherlands Antillean Guilder
+    //             "AOA", // Angolan Kwanza
+    //             "ARS", // Argentine Peso
+    //             "AUD", // Australian Dollar
+    //             "AWG", // Aruban Florin
+    //             "AZN", // Azerbaijani Manat
+    //             "BAM", // Bosnia and Herzegovina Convertible Mark
+    //             "BBD", // Barbadian Dollar
+    //             "BDT", // Bangladeshi Taka
+    //             "BGN", // Bulgarian Lev
+    //             "BHD", // Bahraini Dinar
+    //             "BIF", // Burundian Franc
+    //             "BMD", // Bermudian Dollar
+    //             "BND", // Brunei Dollar
+    //             "BOB", // Bolivian Boliviano
+    //             "BRL", // Brazilian Real
+    //             "BSD", // Bahamian Dollar
+    //             "BTN", // Bhutanese Ngultrum
+    //             "BWP", // Botswanan Pula
+    //             "BYN", // Belarusian Ruble
+    //             "BZD", // Belize Dollar
+    //             "CAD", // Canadian Dollar
+    //             "CDF", // Congolese Franc
+    //             "CHF", // Swiss Franc
+    //             "CLP", // Chilean Peso
+    //             "CNY", // Chinese Yuan
+    //             "COP", // Colombian Peso
+    //             "CRC", // Costa Rican Colón
+    //             "CUC", // Cuban Convertible Peso
+    //             "CUP", // Cuban Peso
+    //             "CVE", // Cape Verdean Escudo
+    //             "CZK", // Czech Koruna
+    //             "DJF", // Djiboutian Franc
+    //             "DKK", // Danish Krone
+    //             "DOP", // Dominican Peso
+    //             "DZD", // Algerian Dinar
+    //             "EGP", // Egyptian Pound
+    //             "ERN", // Eritrean Nakfa
+    //             "ETB", // Ethiopian Birr
+    //             "EUR", // Euro
+    //             "FJD", // Fijian Dollar
+    //             "FKP", // Falkland Islands Pound
+    //             "FOK", // Faroese Króna
+    //             "GBP", // British Pound Sterling
+    //             "GEL", // Georgian Lari
+    //             "GHS", // Ghanaian Cedi
+    //             "GIP", // Gibraltar Pound
+    //             "GMD", // Gambian Dalasi
+    //             "GNF", // Guinean Franc
+    //             "GTQ", // Guatemalan Quetzal
+    //             "GYD", // Guyanaese Dollar
+    //             "HKD", // Hong Kong Dollar
+    //             "HNL", // Honduran Lempira
+    //             "HRK", // Croatian Kuna
+    //             "HTG", // Haitian Gourde
+    //             "HUF", // Hungarian Forint
+    //             "IDR", // Indonesian Rupiah
+    //             "ILS", // Israeli New Shekel
+    //             "INR", // Indian Rupee
+    //             "IQD", // Iraqi Dinar
+    //             "IRR", // Iranian Rial
+    //             "ISK", // Icelandic Króna
+    //             "JMD", // Jamaican Dollar
+    //             "JOD", // Jordanian Dinar
+    //             "JPY", // Japanese Yen
+    //             "KES", // Kenyan Shilling
+    //             "KGS", // Kyrgystani Som
+    //             "KHR", // Cambodian Riel
+    //             "KID", // Kiribati Dollar
+    //             "KMF", // Comorian Franc
+    //             "KRW", // South Korean Won
+    //             "KWD", // Kuwaiti Dinar
+    //             "KYD", // Cayman Islands Dollar
+    //             "KZT", // Kazakhstani Tenge
+    //             "LAK", // Laotian Kip
+    //             "LBP", // Lebanese Pound
+    //             "LKR", // Sri Lankan Rupee
+    //             "LRD", // Liberian Dollar
+    //             "LSL", // Lesotho Loti
+    //             "LYD", // Libyan Dinar
+    //             "MAD", // Moroccan Dirham
+    //             "MDL", // Moldovan Leu
+    //             "MGA", // Malagasy Ariary
+    //             "MKD", // Macedonian Denar
+    //             "MMK", // Myanma Kyat
+    //             "MNT", // Mongolian Tugrik
+    //             "MOP", // Macanese Pataca
+    //             "MRO", // Mauritanian Ouguiya
+    //             "MUR", // Mauritian Rupee
+    //             "MVR", // Maldivian Rufiyaa
+    //             "MWK", // Malawian Kwacha
+    //             "MXN", // Mexican Peso
+    //             "MYR", // Malaysian Ringgit
+    //             "MZN", // Mozambican Metical
+    //             "NAD", // Namibian Dollar
+    //             "NGN", // Nigerian Naira
+    //             "NIO", // Nicaraguan Córdoba
+    //             "NOK", // Norwegian Krone
+    //             "NPR", // Nepalese Rupee
+    //             "NZD", // New Zealand Dollar
+    //             "OMR", // Omani Rial
+    //             "PAB", // Panamanian Balboa
+    //             "PEN", // Peruvian Nuevo Sol
+    //             "PGK", // Papua New Guinean Kina
+    //             "PHP", // Philippine Peso
+    //             "PKR", // Pakistani Rupee
+    //             "PLN", // Polish Zloty
+    //             "PYG", // Paraguayan Guarani
+    //             "QAR", // Qatari Rial
+    //             "RON", // Romanian Leu
+    //             "RSD", // Serbian Dinar
+    //             "RUB", // Russian Ruble
+    //             "RWF", // Rwandan Franc
+    //             "SAR", // Saudi Riyal
+    //             "SBD", // Solomon Islands Dollar
+    //             "SCR", // Seychellois Rupee
+    //             "SDG", // Sudanese Pound
+    //             "SEK", // Swedish Krona
+    //             "SGD", // Singapore Dollar
+    //             "SHP", // Saint Helena Pound
+    //             "SLL", // Sierra Leonean Leone
+    //             "SOS", // Somali Shilling
+    //             "SRD", // Surinamese Dollar
+    //             "SSP", // South Sudanese Pound
+    //             "STN", // São Tomé and Príncipe Dobra
+    //             "SYP", // Syrian Pound
+    //             "SZL", // Swazi Lilangeni
+    //             "THB", // Thai Baht
+    //             "TJS", // Tajikistani Somoni
+    //             "TMT", // Turkmenistani Manat
+    //             "TND", // Tunisian Dinar
+    //             "TOP", // Tongan Paʻanga
+    //             "TRY", // Turkish Lira
+    //             "TTD", // Trinidad and Tobago Dollar
+    //             "TVD", // Tuvaluan Dollar
+    //             "TWD", // New Taiwan Dollar
+    //             "TZS", // Tanzanian Shilling
+    //             "UAH", // Ukrainian Hryvnia
+    //             "UGX", // Ugandan Shilling
+    //             "USD", // United States Dollar
+    //             "UYU", // Uruguayan Peso
+    //             "UZS", // Uzbekistani Som
+    //             "VES", // Venezuelan Bolívar Soberano
+    //             "VND", // Vietnamese Dong
+    //             "VUV", // Vanuatu Vatu
+    //             "WST", // Samoan Tala
+    //             "XAF", // Central African CFA Franc
+    //             "XAG", // Silver Ounce
+    //             "XAU", // Gold Ounce
+    //             "XCD", // East Caribbean Dollar
+    //             "XDR", // International Monetary Fund (IMF) Special Drawing Rights
+    //             "XOF", // West African CFA Franc
+    //             "XPF", // CFP Franc
+    //             "YER", // Yemeni Rial
+    //             "ZAR", // South African Rand
+    //             "ZMK", // Zambian Kwacha (before 2013)
+    //             "ZMW", // Zambian Kwacha (since 2013)
+    //             "ZWL"  // Zimbabwean Dollar
+    //         };
+    //         this->Rates.clear();
+    //         this->Currency_Type = "EUR";
+
+    //         for(auto iter = currencies.begin(); iter != currencies.end(); iter++)
+    //         {
+    //             this->addRate(*iter, 0);
+    //             this->SQLRequest("INSERT INTO Rates VALUES('" + *iter + "', " + std::to_string(0.0) + ")", this->callback);
+    //         }
+    //         this->isRateValidData = false;
+    //         return -1;
+    //     }
+
+    // }
+    // catch (const nlohmann::json::exception& e)
+    // {
+    //     std::list<std::string> currencies = {
+    //         "AED", // United Arab Emirates Dirham
+    //         "AFN", // Afghan Afghani
+    //         "ALL", // Albanian Lek
+    //         "AMD", // Armenian Dram
+    //         "ANG", // Netherlands Antillean Guilder
+    //         "AOA", // Angolan Kwanza
+    //         "ARS", // Argentine Peso
+    //         "AUD", // Australian Dollar
+    //         "AWG", // Aruban Florin
+    //         "AZN", // Azerbaijani Manat
+    //         "BAM", // Bosnia and Herzegovina Convertible Mark
+    //         "BBD", // Barbadian Dollar
+    //         "BDT", // Bangladeshi Taka
+    //         "BGN", // Bulgarian Lev
+    //         "BHD", // Bahraini Dinar
+    //         "BIF", // Burundian Franc
+    //         "BMD", // Bermudian Dollar
+    //         "BND", // Brunei Dollar
+    //         "BOB", // Bolivian Boliviano
+    //         "BRL", // Brazilian Real
+    //         "BSD", // Bahamian Dollar
+    //         "BTN", // Bhutanese Ngultrum
+    //         "BWP", // Botswanan Pula
+    //         "BYN", // Belarusian Ruble
+    //         "BZD", // Belize Dollar
+    //         "CAD", // Canadian Dollar
+    //         "CDF", // Congolese Franc
+    //         "CHF", // Swiss Franc
+    //         "CLP", // Chilean Peso
+    //         "CNY", // Chinese Yuan
+    //         "COP", // Colombian Peso
+    //         "CRC", // Costa Rican Colón
+    //         "CUC", // Cuban Convertible Peso
+    //         "CUP", // Cuban Peso
+    //         "CVE", // Cape Verdean Escudo
+    //         "CZK", // Czech Koruna
+    //         "DJF", // Djiboutian Franc
+    //         "DKK", // Danish Krone
+    //         "DOP", // Dominican Peso
+    //         "DZD", // Algerian Dinar
+    //         "EGP", // Egyptian Pound
+    //         "ERN", // Eritrean Nakfa
+    //         "ETB", // Ethiopian Birr
+    //         "EUR", // Euro
+    //         "FJD", // Fijian Dollar
+    //         "FKP", // Falkland Islands Pound
+    //         "FOK", // Faroese Króna
+    //         "GBP", // British Pound Sterling
+    //         "GEL", // Georgian Lari
+    //         "GHS", // Ghanaian Cedi
+    //         "GIP", // Gibraltar Pound
+    //         "GMD", // Gambian Dalasi
+    //         "GNF", // Guinean Franc
+    //         "GTQ", // Guatemalan Quetzal
+    //         "GYD", // Guyanaese Dollar
+    //         "HKD", // Hong Kong Dollar
+    //         "HNL", // Honduran Lempira
+    //         "HRK", // Croatian Kuna
+    //         "HTG", // Haitian Gourde
+    //         "HUF", // Hungarian Forint
+    //         "IDR", // Indonesian Rupiah
+    //         "ILS", // Israeli New Shekel
+    //         "INR", // Indian Rupee
+    //         "IQD", // Iraqi Dinar
+    //         "IRR", // Iranian Rial
+    //         "ISK", // Icelandic Króna
+    //         "JMD", // Jamaican Dollar
+    //         "JOD", // Jordanian Dinar
+    //         "JPY", // Japanese Yen
+    //         "KES", // Kenyan Shilling
+    //         "KGS", // Kyrgystani Som
+    //         "KHR", // Cambodian Riel
+    //         "KID", // Kiribati Dollar
+    //         "KMF", // Comorian Franc
+    //         "KRW", // South Korean Won
+    //         "KWD", // Kuwaiti Dinar
+    //         "KYD", // Cayman Islands Dollar
+    //         "KZT", // Kazakhstani Tenge
+    //         "LAK", // Laotian Kip
+    //         "LBP", // Lebanese Pound
+    //         "LKR", // Sri Lankan Rupee
+    //         "LRD", // Liberian Dollar
+    //         "LSL", // Lesotho Loti
+    //         "LYD", // Libyan Dinar
+    //         "MAD", // Moroccan Dirham
+    //         "MDL", // Moldovan Leu
+    //         "MGA", // Malagasy Ariary
+    //         "MKD", // Macedonian Denar
+    //         "MMK", // Myanma Kyat
+    //         "MNT", // Mongolian Tugrik
+    //         "MOP", // Macanese Pataca
+    //         "MRO", // Mauritanian Ouguiya
+    //         "MUR", // Mauritian Rupee
+    //         "MVR", // Maldivian Rufiyaa
+    //         "MWK", // Malawian Kwacha
+    //         "MXN", // Mexican Peso
+    //         "MYR", // Malaysian Ringgit
+    //         "MZN", // Mozambican Metical
+    //         "NAD", // Namibian Dollar
+    //         "NGN", // Nigerian Naira
+    //         "NIO", // Nicaraguan Córdoba
+    //         "NOK", // Norwegian Krone
+    //         "NPR", // Nepalese Rupee
+    //         "NZD", // New Zealand Dollar
+    //         "OMR", // Omani Rial
+    //         "PAB", // Panamanian Balboa
+    //         "PEN", // Peruvian Nuevo Sol
+    //         "PGK", // Papua New Guinean Kina
+    //         "PHP", // Philippine Peso
+    //         "PKR", // Pakistani Rupee
+    //         "PLN", // Polish Zloty
+    //         "PYG", // Paraguayan Guarani
+    //         "QAR", // Qatari Rial
+    //         "RON", // Romanian Leu
+    //         "RSD", // Serbian Dinar
+    //         "RUB", // Russian Ruble
+    //         "RWF", // Rwandan Franc
+    //         "SAR", // Saudi Riyal
+    //         "SBD", // Solomon Islands Dollar
+    //         "SCR", // Seychellois Rupee
+    //         "SDG", // Sudanese Pound
+    //         "SEK", // Swedish Krona
+    //         "SGD", // Singapore Dollar
+    //         "SHP", // Saint Helena Pound
+    //         "SLL", // Sierra Leonean Leone
+    //         "SOS", // Somali Shilling
+    //         "SRD", // Surinamese Dollar
+    //         "SSP", // South Sudanese Pound
+    //         "STN", // São Tomé and Príncipe Dobra
+    //         "SYP", // Syrian Pound
+    //         "SZL", // Swazi Lilangeni
+    //         "THB", // Thai Baht
+    //         "TJS", // Tajikistani Somoni
+    //         "TMT", // Turkmenistani Manat
+    //         "TND", // Tunisian Dinar
+    //         "TOP", // Tongan Paʻanga
+    //         "TRY", // Turkish Lira
+    //         "TTD", // Trinidad and Tobago Dollar
+    //         "TVD", // Tuvaluan Dollar
+    //         "TWD", // New Taiwan Dollar
+    //         "TZS", // Tanzanian Shilling
+    //         "UAH", // Ukrainian Hryvnia
+    //         "UGX", // Ugandan Shilling
+    //         "USD", // United States Dollar
+    //         "UYU", // Uruguayan Peso
+    //         "UZS", // Uzbekistani Som
+    //         "VES", // Venezuelan Bolívar Soberano
+    //         "VND", // Vietnamese Dong
+    //         "VUV", // Vanuatu Vatu
+    //         "WST", // Samoan Tala
+    //         "XAF", // Central African CFA Franc
+    //         "XAG", // Silver Ounce
+    //         "XAU", // Gold Ounce
+    //         "XCD", // East Caribbean Dollar
+    //         "XDR", // International Monetary Fund (IMF) Special Drawing Rights
+    //         "XOF", // West African CFA Franc
+    //         "XPF", // CFP Franc
+    //         "YER", // Yemeni Rial
+    //         "ZAR", // South African Rand
+    //         "ZMK", // Zambian Kwacha (before 2013)
+    //         "ZMW", // Zambian Kwacha (since 2013)
+    //         "ZWL"  // Zimbabwean Dollar
+    //     };
+    //     this->Rates.clear();
+    //     this->Currency_Type = "EUR";
+
+    //     for(auto iter = currencies.begin(); iter != currencies.end(); iter++)
+    //     {
+    //         this->addRate(*iter, 0);
+    //         this->SQLRequest("INSERT INTO Rates VALUES('" + *iter + "', " + std::to_string(0.0) + ")", this->callback);
+    //     }
+    //     this->isRateValidData = false;
+    //     return -1;
+    // }
 }
 
 void wlt::eWallet::resetProgramDataFromDB()

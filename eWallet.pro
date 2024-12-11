@@ -49,12 +49,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 
 
-LIBS += -LC:\Users\AdminP\Documents\eWallet\dep\sqlite3_x64-windows\lib -lsqlite3
-INCLUDEPATH += C:\Users\AdminP\Documents\eWallet\dep\sqlite3_x64-windows\include
-DEPENDPATH += C:\Users\AdminP\Documents\eWallet\dep\sqlite3_x64-windows\include
+LIBS += -LC:\Users\dexag\OneDrive\Documents\eWallet\dep\sqlite3_x64-windows\lib -lsqlite3
+INCLUDEPATH += C:\Users\dexag\OneDrive\Documents\eWallet\dep\sqlite3_x64-windows\include
+DEPENDPATH += C:\Users\dexag\OneDrive\Documents\eWallet\dep\sqlite3_x64-windows\include
 
-INCLUDEPATH += C:\Users\AdminP\Documents\eWallet\dep\nlohmann-json_x64-windows\include
-DEPENDPATH += C:\Users\AdminP\Documents\eWallet\dep\nlohmann-json_x64-windows\include
+INCLUDEPATH += C:\Users\dexag\OneDrive\Documents\eWallet\dep\nlohmann-json_x64-windows\include
+DEPENDPATH +=C:\Users\dexag\OneDrive\Documents\eWallet\dep\nlohmann-json_x64-windows\include
 
 RESOURCES += \
     icons.qrc \

@@ -415,7 +415,7 @@ color:rgb(125, 125, 125)
          </property>
          <property name="text">
           <string>Desktop Wallet Manager
-Beta Version 1.0</string>
+Alpha Version 1.0</string>
          </property>
         </widget>
        </item>
@@ -947,7 +947,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                     <x>0</x>
                     <y>0</y>
                     <width>568</width>
-                    <height>584</height>
+                    <height>592</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_24">
@@ -3420,8 +3420,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>600</width>
-                  <height>718</height>
+                  <width>532</width>
+                  <height>394</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_22" columnminimumwidth="0">
@@ -3633,8 +3633,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>782</width>
-                  <height>702</height>
+                  <width>68</width>
+                  <height>18</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_20"/>
@@ -3815,7 +3815,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                   <x>0</x>
                   <y>0</y>
                   <width>500</width>
-                  <height>560</height>
+                  <height>526</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_13">
@@ -4298,8 +4298,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>382</width>
-                  <height>376</height>
+                  <width>318</width>
+                  <height>324</height>
                  </rect>
                 </property>
                 <property name="styleSheet">
