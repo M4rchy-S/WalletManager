@@ -549,7 +549,7 @@ int wlt::eWallet::Create_Note(Operation OperationType, Category CategoryType, st
 
     //  get epochTime from memory
     note_iterator = this->notes.begin();
-    std::advance(note_iterator, this->notes.size() - 1);
+    //std::advance(note_iterator, this->notes.size() - 1);
     time_t epochTime = note_iterator->getEpochTime();
 
     //  Create sql query
@@ -615,7 +615,7 @@ int wlt::eWallet::Create_Note(Operation OperationType, Category CategoryType, st
 
     //  Get epochTime
     note_iterator = this->notes.begin();
-    std::advance(note_iterator, this->notes.size() - 1);
+    //std::advance(note_iterator, this->notes.size() - 1);
     time_t epochTime = note_iterator->getEpochTime();
 
     //  SQL Query
