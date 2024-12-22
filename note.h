@@ -25,7 +25,8 @@ namespace wlt {
 		unsigned long ID;
 
 		//	Time data
-		time_t EpochTime;
+        //time_t EpochTime;
+        unsigned long long EpochTime;
 
 		unsigned int minutes;
 		unsigned int hours;
