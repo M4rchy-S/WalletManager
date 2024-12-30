@@ -1,13 +1,13 @@
 # Desktop Wallet Manager
 Simple wallet and currency organizer
-The progam includes such functionalities as:
+The program includes such functionalities as:
 1. Create and manage new accounts.
 2. Create and manage notes
 3. View statistics with a pie chart
-4. Watch lates rates
+4. Watch latest rates
 
 ## How to run?
-1. Install latest [Visual C++ Restribution](https://learn.microsoft.com/ru-ru/cpp/windows/latest-supported-vc-redist?view=msvc-170)
+1. Install latest [Visual C++ Retribution](https://learn.microsoft.com/ru-ru/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 2. Run .exe installer
 
 ## Examples
